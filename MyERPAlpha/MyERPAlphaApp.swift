@@ -12,7 +12,7 @@ import SwiftData
 struct MyERPAlphaApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            Product.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -28,5 +28,9 @@ struct MyERPAlphaApp: App {
             ContentView()
         }
         .modelContainer(sharedModelContainer)
+    }
+    
+    init() {
+        print(URL.applicationSupportDirectory.path(percentEncoded: false))
     }
 }

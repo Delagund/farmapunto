@@ -9,47 +9,50 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Environment(\.modelContext) private var context
+    @Query private var products: [Product]
+    @State private var path = [Product]()
 
     var body: some View {
-        NavigationSplitView {
+        NavigationStack(path: $path) {
             List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                ForEach(products) { product in
+                    NavigationLink(value: product) {
+                        Text(product.productName)
                     }
                 }
                 .onDelete(perform: deleteItems)
             }
+            .navigationTitle("Productos")
+            .navigationDestination(for: Product.self
+                                   , destination: { product in
+                EditProductView(product: product)
+            })
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
                 ToolbarItem {
                     Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                        Label("Add Product", systemImage: "plus")
                     }
                 }
             }
-        } detail: {
-            Text("Select an item")
         }
     }
 
     private func addItem() {
         withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
+            let newProduct = Product(productName: "producto")
+            context.insert(newProduct)
+            path.append(newProduct)
         }
     }
 
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                modelContext.delete(items[index])
+                context.delete(products[index])
             }
         }
     }
@@ -57,5 +60,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .modelContainer(for: Product.self, inMemory: true)
 }
