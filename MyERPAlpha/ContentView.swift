@@ -11,26 +11,31 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var context
     @State private var path = [Product]()
-
+    @State private var searchText = ""
+    @State private var sortOrder = [SortDescriptor(\Product.productName)]
 
     var body: some View {
         NavigationStack(path: $path) {
-            ProductView()
+            ProductView(searchString: searchText, sortOrder: sortOrder)
                 .navigationTitle("Productos")
-                .navigationDestination(for: Product.self
-                                       , destination: { product in
+                .navigationDestination(for: Product.self) { product in
                     EditProductView(product: product)
-                })
+                }
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        EditButton()
-                    }
-                    ToolbarItem {
-                        Button(action: addItem) {
-                            Label("Add Product", systemImage: "plus")
+                    Menu("Orden", systemImage: "arrow.up.arrow.down") {
+                        Picker("Sort", selection: $sortOrder) {
+                            Text("Nombre A-Z")
+                                .tag([SortDescriptor(\Product.productName)])
+                            
+                            Text("Nombre Z-A")
+                                .tag([SortDescriptor(\Product.productName, order: .reverse)])
                         }
                     }
+                    Button(action: addItem) {
+                        Label("Add Product", systemImage: "plus")
+                    }
                 }
+                .searchable(text: $searchText)
         }
     }
 

@@ -18,6 +18,7 @@ struct EditProductView: View {
                 Text("SKU:")
                     .bold()
                 TextField("Código de Barras", text: $product.code)
+                    .keyboardType(.numberPad)
             }
             HStack(alignment: .center) {
                 Text("Nombre:")
@@ -52,16 +53,19 @@ struct EditProductView: View {
                 Text("Stock:")
                     .bold()
                 TextField("en Inventario", value: $product.qtyInStock, format: .number)
+                    .keyboardType(.numberPad)
             }
             HStack(alignment: .center) {
                 Text("Costo Neto: $")
                     .bold()
                 TextField("Valor Neto", value: $product.netPrice, format: .number)
+                    .keyboardType(.numberPad)
             }
             HStack(alignment: .center) {
                 Text("Precio Venta: $")
                     .bold()
                 TextField("Valor $", value: $product.finalPrice, format: .number)
+                    .keyboardType(.numberPad)
             }
         }
         .navigationTitle("Editar Producto")

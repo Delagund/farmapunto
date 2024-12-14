@@ -23,7 +23,6 @@ struct ProductView: View {
                         HStack{
                             Text("SKU:")
                             Text(product.code)
-                                
                         }
                         .font(.system(size: 15, design: .rounded))
                         .fontWeight(.light)
@@ -34,6 +33,16 @@ struct ProductView: View {
         }
     }
     
+    init(searchString: String = "", sortOrder: [SortDescriptor<Product>] = []) {
+        _products = Query(filter: #Predicate { product in
+            if searchString.isEmpty {
+                true
+            } else {
+                product.productName.localizedStandardContains(searchString)
+                || product.code.localizedStandardContains(searchString)
+            }
+        }, sort: sortOrder)
+    }
     
     private func deleteItems(at offsets: IndexSet) {
         withAnimation {
