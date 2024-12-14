@@ -12,4 +12,8 @@ let testProduct1 = Product(code: "7800060005723",
                            genericName: "Clorhexidina",
                            dosisQty: 12.0,
                            farmaForm: "Comprimidos",
-                           laboratoryName: "Saval")
+                           laboratoryName: "Saval",
+                           qtyInStock: 100,
+                           netPrice: 1250,
+                           finalPrice: 3900)
+                           
