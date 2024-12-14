@@ -18,12 +18,15 @@ struct ProductView: View {
                 NavigationLink(value: product) {
                     VStack(alignment: .leading) {
                         Text(product.productName)
+                            .font(.title3)
+                            .fontWeight(.semibold)
                         HStack{
                             Text("SKU:")
                             Text(product.code)
-                                .font(.system(size: 10))
-                                .fontWeight(.light)
+                                
                         }
+                        .font(.system(size: 15, design: .rounded))
+                        .fontWeight(.light)
                     }
                 }
             }
@@ -42,6 +45,7 @@ struct ProductView: View {
     }
 }
 
-#Preview {
-    ProductView()
-}
+//#Preview {
+//    ProductView()
+//        
+//}

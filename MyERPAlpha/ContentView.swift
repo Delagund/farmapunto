@@ -36,7 +36,7 @@ struct ContentView: View {
 
     private func addItem() {
         withAnimation {
-            let newProduct = Product(code: "001", productName: "Producto")
+            let newProduct = Product(code: "001", productName: "PRODUCTO")
             context.insert(newProduct)
             path.append(newProduct)
         }
@@ -45,4 +45,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .modelContainer(for: Product.self, inMemory: true)
 }
