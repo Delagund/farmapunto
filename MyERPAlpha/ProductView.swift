@@ -13,23 +13,29 @@ struct ProductView: View {
     @Query var products: [Product]
     
     var body: some View {
-        List {
-            ForEach(products) { product in
-                NavigationLink(value: product) {
-                    VStack(alignment: .leading) {
-                        Text(product.productName)
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                        HStack{
-                            Text("SKU:")
-                            Text(product.code)
+        Group{
+            if products.isEmpty {
+                ContentUnavailableView("Crea un Producto", systemImage: "pills.fill")
+            } else {
+                List {
+                    ForEach(products) { product in
+                        NavigationLink(value: product) {
+                            VStack(alignment: .leading) {
+                                Text(product.productName)
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                HStack{
+                                    Text("SKU:")
+                                    Text(product.code)
+                                }
+                                .font(.system(size: 15, design: .rounded))
+                                .fontWeight(.light)
+                            }
                         }
-                        .font(.system(size: 15, design: .rounded))
-                        .fontWeight(.light)
                     }
+                    .onDelete(perform: deleteItems)
                 }
             }
-            .onDelete(perform: deleteItems)
         }
     }
     
