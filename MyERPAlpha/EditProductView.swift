@@ -33,9 +33,10 @@ struct EditProductView: View {
                     .textInputAutocapitalization(.characters)
             }
             HStack(alignment: .center) {
-                Text("Dosis unitaria:")
+                Text("Dosis x Envase:")
                     .bold()
                 TextField("Cantidad de dosis", value: $product.dosisQty, format: .number)
+                    .keyboardType(.numberPad)
             }
             HStack(alignment: .center) {
                 Text("Presentación:")
@@ -49,28 +50,10 @@ struct EditProductView: View {
                 TextField("Laboratorio", text: $product.laboratoryName)
                     .textInputAutocapitalization(.characters)
             }
-            HStack(alignment: .center) {
-                Text("Stock:")
-                    .bold()
-                TextField("en Inventario", value: $product.qtyInStock, format: .number)
-                    .keyboardType(.numberPad)
-            }
-            HStack(alignment: .center) {
-                Text("Costo Neto: $")
-                    .bold()
-                TextField("Valor Neto", value: $product.netPrice, format: .number)
-                    .keyboardType(.numberPad)
-            }
-            HStack(alignment: .center) {
-                Text("Precio Venta: $")
-                    .bold()
-                TextField("Valor $", value: $product.finalPrice, format: .number)
-                    .keyboardType(.numberPad)
-            }
+            
         }
         .navigationTitle("Editar Producto")
         .navigationBarTitleDisplayMode(.automatic)
-        
     }
 }
 

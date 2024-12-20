@@ -60,7 +60,7 @@ struct ProductView: View {
     }
 }
 
-//#Preview {
-//    ProductView()
-//        
-//}
+#Preview {
+    ProductView()
+        
+}
