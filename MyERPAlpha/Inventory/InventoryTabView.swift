@@ -29,7 +29,6 @@ struct InventoryTabView: View {
     }
 }
 
-//#Preview {
-//    InventoryTabView()
-//        .modelContainer(for: Product.self, inMemory: true)
-//}
+#Preview {
+    InventoryTabView()
+}

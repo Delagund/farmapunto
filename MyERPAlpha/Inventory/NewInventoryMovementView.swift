@@ -126,5 +126,5 @@ struct NewInventoryMovementView: View {
 }
 
 #Preview {
-    NewInventoryMovementView(inventory: inventory)
+    NewInventoryMovementView(inventory: inventoryTest1)
 }

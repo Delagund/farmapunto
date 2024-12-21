@@ -49,7 +49,7 @@ struct InventoryDetailView: View {
                 }
             }
         }
-        .navigationTitle("Inventario: \(inventory.product.productName)")
+        .navigationTitle("\(inventory.product.productName)")
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button(action: {
@@ -70,6 +70,6 @@ struct InventoryDetailView: View {
 }
 
 #Preview {
-    InventoryDetailView(inventory: inventory)
+    InventoryDetailView(inventory: inventoryTest1)
         .modelContainer(for: Inventory.self, inMemory: true)
 }

@@ -45,6 +45,6 @@ struct InventoryMovementRow: View {
 }
 
 #Preview {
-    InventoryMovementRow(movement: invenroyMove)
+    InventoryMovementRow(movement: inventoryMoves1)
 }
 
