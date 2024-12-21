@@ -15,7 +15,7 @@ struct InventoryDetailView: View {
     var body: some View {
         List {
             // Sección de información del producto farmacéutico
-            Section("Información del Medicamento") {
+            Section("Stock en Inventario") {
                 LabeledContent("Código (SKU)", value: inventory.product.code)
                 
                 LabeledContent("Nombre Comercial", value: inventory.product.productName)
@@ -25,7 +25,7 @@ struct InventoryDetailView: View {
                 LabeledContent("Forma Farmacéutica", value: inventory.product.farmaForm)
                 
                 LabeledContent("Dosis por Envase") {
-                    Text("\(inventory.product.dosisQty, specifier: "%.1f")")
+                    Text("\(inventory.product.dosisQty, specifier: "%.2f")")
                 }
                 
                 LabeledContent("Laboratorio", value: inventory.product.laboratoryName)

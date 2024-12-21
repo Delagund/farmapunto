@@ -1,3 +1,11 @@
+//
+//  InventoryMovementRow.swift
+//  MyERPAlpha
+//
+//  Created by Cristián Ortiz on 20-12-24.
+//
+import SwiftUI
+
 
 // Vista para mostrar una fila de movimiento de inventario
 struct InventoryMovementRow: View {
@@ -34,5 +42,9 @@ struct InventoryMovementRow: View {
         }
         .padding(.vertical, 4)
     }
+}
+
+#Preview {
+    InventoryMovementRow(movement: invenroyMove)
 }
 
