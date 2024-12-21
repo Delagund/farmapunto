@@ -16,6 +16,8 @@ let testProduct1 = Product(code: "7800060005723",
                     )
 
 let inventory = Inventory(product: testProduct1, qtyInStock: 100)
+
+let invenroyMove = InventoryMovement(product: testProduct1)
  
 //MARK: funcion para borrar en cascada un producto y todos sus datos en otras tablas.
 
@@ -34,4 +36,8 @@ func deleteProduct(_ product: Product, context: ModelContext) throws {
     // Finalmente, eliminar el producto
     context.delete(product)
 }
+ 
+ 
+ Text(String(format: "%.2f €", producto.precio))
+ .frame(width: 80, alignment: .trailing)
 */

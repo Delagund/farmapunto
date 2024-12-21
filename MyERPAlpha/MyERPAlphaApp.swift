@@ -26,7 +26,7 @@ struct MyERPAlphaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainMenuApp()
         }
         .modelContainer(sharedModelContainer)
     }

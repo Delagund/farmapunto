@@ -8,14 +8,15 @@
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
+struct ProductTabView: View {
     @Environment(\.modelContext) private var context
-    @State private var path = [Product]()
+    @Environment(\.dismiss) var dismiss
+    @State private var path: [Product] = []
     @State private var searchText = ""
     @State private var sortOrder = [SortDescriptor(\Product.productName)]
 
     var body: some View {
-        NavigationStack(path: $path) {
+      
             ProductView(searchString: searchText, sortOrder: sortOrder)
                 .navigationTitle("Productos")
                 .navigationDestination(for: Product.self) { product in
@@ -36,19 +37,20 @@ struct ContentView: View {
                     }
                 }
                 .searchable(text: $searchText)
-        }
     }
 
     private func addItem() {
         withAnimation {
             let newProduct = Product(code: "", productName: "PRODUCTO")
             context.insert(newProduct)
+            let newInventory = Inventory(product: newProduct, qtyInStock: 0)
+            context.insert(newInventory)
             path.append(newProduct)
         }
     }
 }
 
-#Preview {
-    ContentView()
-        .modelContainer(for: Product.self, inMemory: true)
-}
+//#Preview {
+//    ProductTabView()
+//        .modelContainer(for: Product.self, inMemory: true)
+//}

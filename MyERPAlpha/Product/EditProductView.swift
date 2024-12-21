@@ -50,7 +50,6 @@ struct EditProductView: View {
                 TextField("Laboratorio", text: $product.laboratoryName)
                     .textInputAutocapitalization(.characters)
             }
-            
         }
         .navigationTitle("Editar Producto")
         .navigationBarTitleDisplayMode(.automatic)

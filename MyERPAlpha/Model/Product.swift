@@ -27,6 +27,4 @@ class Product {
         self.laboratoryName = laboratoryName
         
     }
- 
-    
 }
