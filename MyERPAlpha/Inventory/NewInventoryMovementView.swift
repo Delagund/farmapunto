@@ -39,7 +39,6 @@ struct NewInventoryMovementView: View {
                     
                     HStack() {
                         Text("Cantidad:")
-                        Spacer()
                         TextField("Cantidad", value: $quantity, format: .number)
                             .keyboardType(.numberPad)
                             .foregroundColor(.secondary)

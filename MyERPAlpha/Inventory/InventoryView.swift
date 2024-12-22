@@ -9,16 +9,20 @@ struct InventoryView: View {
         List {
             ForEach(inventories) { inventory in
                 NavigationLink(value: inventory) {
-                    VStack(alignment: .leading) {
-                        Text(inventory.product.productName)
-                            .font(.title3)
-                            .fontWeight(.semibold)
+                    HStack(alignment: .center) {
+                        VStack(alignment: .leading){
+                            Text("SKU: \(inventory.product.code)")
+                            Text(inventory.product.productName)
+                        }
+                        .font(.caption2)
+                        .fontWeight(.semibold)
+                        Spacer()
                         HStack{
-                            Text("Qty")
+                            Text("Stock:")
                             Text("\(inventory.qtyInStock)")
                         }
-                        .font(.system(size: 15, design: .rounded))
-                        .fontWeight(.light)
+                        .font(.system(size: 20, design: .rounded))
+                        .fontWeight(.medium)
                     }
                 }
             }

@@ -30,6 +30,7 @@ let inventoryTest2 = Inventory(product: testProduct2, qtyInStock: 298)
 let inentoryMoves2 = InventoryMovement(product: testProduct2, quantity: 35, type: .entrada, reason: "compra", date: .now)
 
 let myTestProducts = [testProduct1, testProduct2]
+let myInventoriesTest = [inventoryTest1, inventoryTest2]
  
 //MARK: funcion para borrar en cascada un producto y todos sus datos en otras tablas.
 

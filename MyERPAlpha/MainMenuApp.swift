@@ -20,48 +20,48 @@ struct MainMenuApp: View {
                     .padding()
                 
                 HStack(spacing: 30) {
-                   
-                        VStack {
-                            Image(systemName: "pills.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 50)
-                            Text("Productos")
-                                .bold()
-                        }
-                        .frame(width: 150, height: 150)
-                        .background(Color.blue.opacity(0.1))
-                        .cornerRadius(20)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(lineWidth: 5)
-                                .foregroundColor(.blue)
-                        }
-                        .onTapGesture {
-                            path.append("Productos") // Navega a la vista de productos
-                        }
-                   
-
-                        VStack {
-                            Image(systemName: "pencil.and.list.clipboard")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 50)
-                            Text("Inventario")
-                                .bold()
-                        }
-                        .frame(width: 150, height: 150)
-                        .background(Color.green.opacity(0.1))
-                        .cornerRadius(20)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(lineWidth: 5)
-                                .foregroundColor(.green)
-                        }
-                        .onTapGesture {
-                            path.append("Inventario") // Navega a la vista de inventario
-                        }
-                   
+                    
+                    VStack {
+                        Image(systemName: "pills.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50, height: 50)
+                        Text("Productos")
+                            .bold()
+                    }
+                    .frame(width: 150, height: 150)
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(20)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(lineWidth: 5)
+                            .foregroundColor(.blue)
+                    }
+                    .onTapGesture {
+                        path.append("Productos") // Navega a la vista de productos
+                    }
+                    
+                    VStack {
+                        Image(systemName: "pencil.and.list.clipboard")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50, height: 50)
+                        Text("Inventario")
+                            .bold()
+                    }
+                    .frame(width: 150, height: 150)
+                    .background(Color.green.opacity(0.1))
+                    .cornerRadius(20)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(lineWidth: 5)
+                            .foregroundColor(.green)
+                    }
+                    .onTapGesture {
+                        path.append("Inventario") // Navega a la vista de inventario
+                    }
+                    
+                    
                 }
                 .navigationDestination(for: String.self) { destination in
                     if destination == "Productos" {
@@ -70,8 +70,26 @@ struct MainMenuApp: View {
                         InventoryTabView()
                     }
                 }
+                
+                HStack(spacing: 30){
+                    VStack(alignment: .center) {
+                        Image(systemName: "dollarsign.square")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50, height: 50)
+                        Text("Mantenedor Precios")
+                            .bold()
+                    }
+                    .frame(width: 150, height: 150)
+                    .background(Color.yellow.opacity(0.1))
+                    .cornerRadius(20)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(lineWidth: 5)
+                            .foregroundColor(.yellow)
+                    }
+                }
             }
-            
         }
     }
 }
