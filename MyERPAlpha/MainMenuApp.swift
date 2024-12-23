@@ -13,7 +13,7 @@ struct MainMenuApp: View {
     
     var body: some View {
         NavigationStack(path: $path){
-            VStack {
+            VStack(spacing: 30) {
                 Text("Farmapunto")
                     .font(.system(size: 50))
                     .bold()
@@ -50,12 +50,12 @@ struct MainMenuApp: View {
                             .bold()
                     }
                     .frame(width: 150, height: 150)
-                    .background(Color.green.opacity(0.1))
+                    .background(Color.red.opacity(0.1))
                     .cornerRadius(20)
                     .overlay {
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(lineWidth: 5)
-                            .foregroundColor(.green)
+                            .foregroundColor(.red)
                     }
                     .onTapGesture {
                         path.append("Inventario") // Navega a la vista de inventario
@@ -88,7 +88,26 @@ struct MainMenuApp: View {
                             .stroke(lineWidth: 5)
                             .foregroundColor(.yellow)
                     }
+                    
+                    VStack(alignment: .center) {
+                        Image(systemName: "cart.badge.plus")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50, height: 50)
+                        Text("Punto de Venta")
+                            .bold()
+                    }
+                    .frame(width: 150, height: 150)
+                    .background(Color.green.opacity(0.1))
+                    .cornerRadius(20)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(lineWidth: 5)
+                            .foregroundColor(.green)
+                    }
                 }
+                
+                Spacer()
             }
         }
     }
@@ -96,4 +115,5 @@ struct MainMenuApp: View {
 
 #Preview {
     MainMenuApp()
+        .modelContainer(for: Product.self, inMemory: true)
 }
