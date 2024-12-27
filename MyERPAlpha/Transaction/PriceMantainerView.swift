@@ -27,11 +27,10 @@ struct PriceMantainerView: View {
                         Spacer()
                         HStack{
                             Text("Precio: $")
-                            Text("\(transaction.finalPrice)")
+                            Text("\(transaction.storedFinalPrice)")
                         }
                         .font(.system(size: 20, design: .rounded))
                         .fontWeight(.medium)
-                        
                     }
                 }
             }

@@ -11,6 +11,7 @@ import SwiftData
 struct InventoryTabView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) var dismiss
+    
     @Query var inventories: [Inventory]
     
     @State private var path = [Inventory]()

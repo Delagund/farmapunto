@@ -17,6 +17,7 @@ class Product {
     
     @Relationship(deleteRule: .cascade, inverse: \Inventory.product) var inventory: Inventory?
     @Relationship(deleteRule: .cascade, inverse: \InventoryMovement.product) var movements: [InventoryMovement]?
+    @Relationship(deleteRule: .cascade, inverse: \Transaction.product) var transaction: Transaction?
 
     init(code: String = "", productName: String = "", genericName: String = "", dosisQty: Double = 0.0, farmaForm: String = "", laboratoryName: String = "") {
         self.code = code

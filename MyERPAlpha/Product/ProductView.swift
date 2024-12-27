@@ -39,6 +39,7 @@ struct ProductView: View {
         }
     }
     
+    //inicializador de la busqueda y orden
     init(searchString: String = "", sortOrder: [SortDescriptor<Product>] = []) {
         _products = Query(filter: #Predicate { product in
             if searchString.isEmpty {

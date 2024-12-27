@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 
-// Vista principal para mostrar el inventario de un producto farmacéutico
+// Vista principal para mostrar el inventario.
 struct InventoryDetailView: View {
     let inventory: Inventory
     @Environment(\.modelContext) private var context

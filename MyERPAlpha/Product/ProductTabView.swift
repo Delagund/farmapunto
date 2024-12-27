@@ -16,27 +16,27 @@ struct ProductTabView: View {
     @State private var sortOrder = [SortDescriptor(\Product.productName)]
 
     var body: some View {
-      
-            ProductView(searchString: searchText, sortOrder: sortOrder)
-                .navigationTitle("Productos")
-                .navigationDestination(for: Product.self) { product in
-                    EditProductView(product: product)
-                }
-                .toolbar {
-                    Menu("Orden", systemImage: "arrow.up.arrow.down") {
-                        Picker("Sort", selection: $sortOrder) {
-                            Text("Nombre A-Z")
-                                .tag([SortDescriptor(\Product.productName)])
-                            
-                            Text("Nombre Z-A")
-                                .tag([SortDescriptor(\Product.productName, order: .reverse)])
-                        }
-                    }
-                    Button(action: addItem) {
-                        Label("Add Product", systemImage: "plus")
+        
+        ProductView(searchString: searchText, sortOrder: sortOrder)
+            .navigationTitle("Productos")
+            .navigationDestination(for: Product.self) { product in
+                EditProductView(product: product)
+            }
+            .toolbar {
+                Menu("Orden", systemImage: "arrow.up.arrow.down") {
+                    Picker("Sort", selection: $sortOrder) {
+                        Text("Nombre A-Z")
+                            .tag([SortDescriptor(\Product.productName)])
+                        
+                        Text("Nombre Z-A")
+                            .tag([SortDescriptor(\Product.productName, order: .reverse)])
                     }
                 }
-                .searchable(text: $searchText)
+                Button(action: addItem) {
+                    Label("Add Product", systemImage: "plus")
+                }
+            }
+            .searchable(text: $searchText)
     }
 
     private func addItem() {
@@ -45,6 +45,9 @@ struct ProductTabView: View {
             context.insert(newProduct)
             let newInventory = Inventory(product: newProduct, qtyInStock: 0)
             context.insert(newInventory)
+            let newTransaction = Transaction(product: newProduct, netPrice: 0.0, date: .now)
+            context.insert(newTransaction)
+            
             path.append(newProduct)
         }
     }

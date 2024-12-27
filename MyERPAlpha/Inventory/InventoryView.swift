@@ -26,7 +26,6 @@ struct InventoryView: View {
                     }
                 }
             }
-            .onDelete(perform: deleteItems)
         }
     }
     
@@ -40,15 +39,6 @@ struct InventoryView: View {
                 || inventory.product.code.localizedStandardContains(searchString)
             }
         }, sort: sortOrder)
-    }
-    
-    private func deleteItems(at offsets: IndexSet) {
-        withAnimation {
-            for offset in offsets {
-                let inventory = inventories[offset]
-                context.delete(inventory)
-            }
-        }
     }
 }
 

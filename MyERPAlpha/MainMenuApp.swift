@@ -63,13 +63,6 @@ struct MainMenuApp: View {
                     
                     
                 }
-                .navigationDestination(for: String.self) { destination in
-                    if destination == "Productos" {
-                        ProductTabView()
-                    } else if destination == "Inventario" {
-                        InventoryTabView()
-                    }
-                }
                 
                 HStack(spacing: 30){
                     VStack(alignment: .center) {
@@ -88,6 +81,9 @@ struct MainMenuApp: View {
                             .stroke(lineWidth: 5)
                             .foregroundColor(.yellow)
                     }
+                    .onTapGesture {
+                        path.append("Precios") // Navega a la vista de Mantenedor de Precios
+                    }
                     
                     VStack(alignment: .center) {
                         Image(systemName: "cart.badge.plus")
@@ -104,6 +100,15 @@ struct MainMenuApp: View {
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(lineWidth: 5)
                             .foregroundColor(.green)
+                    }
+                }
+                .navigationDestination(for: String.self) { destination in
+                    if destination == "Productos" {
+                        ProductTabView()
+                    } else if destination == "Inventario" {
+                        InventoryTabView()
+                    } else if destination == "Precios" {
+                        PriceMantainerTabView()
                     }
                 }
                 
