@@ -1,9 +1,3 @@
-//
-//  NewInventoryMovementView.swift
-//  MyERPAlpha
-//
-//  Created by Cristián Ortiz on 20-12-24.
-//
 import SwiftUI
 
 // Vista para crear un nuevo movimiento de inventario
@@ -115,7 +109,7 @@ struct NewInventoryMovementView: View {
         
         // Actualizar las relaciones bidireccionales
         inventory.movements.append(movement)
-        inventory.product.movements?.append(movement)
+        inventory.product.movements.append(movement)
         
         // Guardar los cambios en SwiftData
         try? context.save()

@@ -1,10 +1,3 @@
-//
-//  ProductView.swift
-//  MyERPAlpha
-//
-//  Created by Cristián Ortiz on 13-12-24.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -18,7 +11,7 @@ struct ProductView: View {
                 ContentUnavailableView("Crea un Producto", systemImage: "pills.fill")
             } else {
                 List {
-                    ForEach(products) { product in
+                    ForEach(products, id: \.code) { product in
                         NavigationLink(value: product) {
                             VStack(alignment: .leading) {
                                 Text(product.productName)

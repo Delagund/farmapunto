@@ -1,9 +1,3 @@
-//
-//  TestData.swift
-//  MyERPAlpha
-//
-//  Created by Cristián Ortiz on 13-12-24.
-//
 
 import Foundation
 
@@ -19,7 +13,7 @@ let inventoryTest1 = Inventory(product: testProduct1, qtyInStock: 345)
 
 let inventoryMoves1 = InventoryMovement(product: testProduct1, quantity: 11, type: .salida, reason: "venta", date: .now)
 
-let transactionTest1 = Transaction(product: testProduct1, netPrice: 1200, taxFee: 19, discount: 0, revenue: 20, storedFinalPrice: 2500)
+let transactionTest1 = Transaction(product: testProduct1, netPrice: 1200, taxFee: 19, revenue: 20, storedFinalPrice: 2500)
 
 let testProduct2 = Product(code: "78123000234",
                            productName: "CLORFENAMINA 4MG X 20 COMP",
@@ -31,7 +25,7 @@ let testProduct2 = Product(code: "78123000234",
 let inventoryTest2 = Inventory(product: testProduct2, qtyInStock: 298)
 let inventoryMoves2 = InventoryMovement(product: testProduct2, quantity: 35, type: .entrada, reason: "compra", date: .now)
 
-let transactionTest2 = Transaction(product: testProduct2, netPrice: 180, taxFee: 19, discount: 0, revenue: 20, storedFinalPrice: 990)
+let transactionTest2 = Transaction(product: testProduct2, netPrice: 180, taxFee: 19, revenue: 20, storedFinalPrice: 990)
 
 let myTestProducts = [testProduct1, testProduct2]
 let myInventoriesTest = [inventoryTest1, inventoryTest2]
@@ -74,6 +68,22 @@ func deleteProduct(_ product: Product, context: ModelContext) throws {
  return calculedPrice.rounded(.toNearestOrAwayFromZero)
  }
  
+ 
+ /// Actualiza el stock basado en un movimiento.
+ func updateStock(movement: InventoryMovement) {
+ movements.append(movement)
+ switch movement.type {
+ case .entrada:
+ qtyInStock += movement.quantity
+ case .salida:
+ qtyInStock -= movement.quantity
+ }
+ }
+ 
+ /// Método para validar si hay suficiente stock antes de realizar una salida (opcional).
+ func hasSufficientStock(for quantity: Int) -> Bool {
+ return qtyInStock - quantity >= 0
+ }
  
  
 */

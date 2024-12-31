@@ -1,23 +1,15 @@
-//
-//  PriceMaintainerDetailView.swift
-//  MyERPAlpha
-//
-//  Created by Cristián Ortiz on 25-12-24.
-//
-
 import SwiftUI
 import SwiftData
 
 //Vista del mantenedor de precios.
 struct PriceMantainerDetailView: View {
-    @Environment(\.modelContext) private var context
-    let transaction: Transaction
+    @Bindable var transaction: Transaction
     @State private var showTransactionSheet = false
- 
     
     var body: some View {
-        List {
+        Form {
             Section("Detalle Producto") {
+                
                 LabeledContent("Código (SKU)", value: transaction.product.code)
                 
                 LabeledContent("Nombre Comercial", value: transaction.product.productName)
@@ -26,24 +18,24 @@ struct PriceMantainerDetailView: View {
                 
                 LabeledContent("Laboratorio", value: transaction.product.laboratoryName)
             }
-            
+                
             Section("Costos") {
                 LabeledContent("Costo Neto") { Text("$\(transaction.netPrice, specifier: "%.0f")")
                 }
                 
-                LabeledContent("Ganancia") { Text("\(transaction.revenue, specifier: "%.0f")%")
+                LabeledContent("Margen") { Text("\(transaction.revenue, specifier: "%.0f")%")
                 }
                 
                 LabeledContent("Impuesto (IVA)") { Text("\(transaction.taxFee, specifier: "%.0f")%")
                 }
             }
             
-//            Section("Precio Venta Actual") {
-//                LabeledContent("Precio Venta") { Text("$\(transaction.storedFinalPrice)")
-//                }
-//            }
+            Section("Precio Venta Actual") {
+                LabeledContent("Precio Venta") { Text("$\(transaction.storedFinalPrice, specifier: "%.0f")")
+                }
+            }
         }
-        .navigationTitle("Mantenedor Precios")
+        .navigationTitle("Editar Precio")
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button(action: {

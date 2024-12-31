@@ -7,7 +7,7 @@ import SwiftData
 @Model
 class Product {
     
-    @Attribute(.unique) var code: String        // SKU o código interno único
+    @Attribute(.unique) var code: String    // SKU o código interno único
     
     var productName: String // nombre de fantasia o comercial.
     var genericName: String // nombre principio activo.
@@ -15,9 +15,9 @@ class Product {
     var farmaForm: String   // forma farmaceutica, ej: comprimdos, jarabe, etc.
     var laboratoryName: String // nombre fabricante
     
-    @Relationship(deleteRule: .cascade, inverse: \Inventory.product) var inventory: Inventory?
-    @Relationship(deleteRule: .cascade, inverse: \InventoryMovement.product) var movements: [InventoryMovement]?
-    @Relationship(deleteRule: .cascade, inverse: \Transaction.product) var transaction: Transaction?
+    @Relationship(deleteRule: .cascade, inverse: \Inventory.product) var inventory: [Inventory] = []
+    @Relationship(deleteRule: .cascade, inverse: \InventoryMovement.product) var movements: [InventoryMovement] = []
+    @Relationship(deleteRule: .cascade, inverse: \Transaction.product) var transaction: [Transaction] = []
 
     init(code: String = "", productName: String = "", genericName: String = "", dosisQty: Double = 0.0, farmaForm: String = "", laboratoryName: String = "") {
         self.code = code

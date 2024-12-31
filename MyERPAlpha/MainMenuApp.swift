@@ -11,6 +11,20 @@ struct MainMenuApp: View {
     
     @State private var path = NavigationPath() // Ruta global
     
+    /// Datos para conformar los botones
+    var buttonConfigs: [squareButton] = [
+        .init(iconSystemName: "pills.fill", buttonName: "Productos", buttonColor: Color.blue),
+        .init(iconSystemName: "pencil.and.list.clipboard", buttonName: "Inventario", buttonColor: Color.red),
+        .init(iconSystemName: "dollarsign.square", buttonName: "Mantenedor Precios", buttonColor: Color.yellow),
+        .init(iconSystemName: "cart.badge.plus", buttonName: "Venta", buttonColor: Color.green)
+    ]
+    
+    ///Layout de los butones
+    var columns: [GridItem] = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+    ]
+
     var body: some View {
         NavigationStack(path: $path){
             VStack(spacing: 30) {
@@ -20,98 +34,29 @@ struct MainMenuApp: View {
                     .padding()
                 
                 HStack(spacing: 30) {
-                    
-                    VStack {
-                        Image(systemName: "pills.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                        Text("Productos")
-                            .bold()
+                    LazyVGrid(columns: columns, spacing: 30) {
+                        ForEach(buttonConfigs, id: \.buttonName) { squareOption in
+                            squareButton(iconSystemName: squareOption.iconSystemName,
+                                         buttonName: squareOption.buttonName,
+                                         buttonColor: squareOption.buttonColor)
+                            .onTapGesture {
+                                path.append(squareOption.buttonName) // Navega a la vista de inventario
+                            }
+                        }
                     }
-                    .frame(width: 150, height: 150)
-                    .background(Color.blue.opacity(0.1))
-                    .cornerRadius(20)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(lineWidth: 5)
-                            .foregroundColor(.blue)
-                    }
-                    .onTapGesture {
-                        path.append("Productos") // Navega a la vista de productos
-                    }
-                    
-                    VStack {
-                        Image(systemName: "pencil.and.list.clipboard")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                        Text("Inventario")
-                            .bold()
-                    }
-                    .frame(width: 150, height: 150)
-                    .background(Color.red.opacity(0.1))
-                    .cornerRadius(20)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(lineWidth: 5)
-                            .foregroundColor(.red)
-                    }
-                    .onTapGesture {
-                        path.append("Inventario") // Navega a la vista de inventario
-                    }
-                    
-                    
-                }
-                
-                HStack(spacing: 30){
-                    VStack(alignment: .center) {
-                        Image(systemName: "dollarsign.square")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                        Text("Mantenedor Precios")
-                            .bold()
-                    }
-                    .frame(width: 150, height: 150)
-                    .background(Color.yellow.opacity(0.1))
-                    .cornerRadius(20)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(lineWidth: 5)
-                            .foregroundColor(.yellow)
-                    }
-                    .onTapGesture {
-                        path.append("Precios") // Navega a la vista de Mantenedor de Precios
-                    }
-                    
-                    VStack(alignment: .center) {
-                        Image(systemName: "cart.badge.plus")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                        Text("Punto de Venta")
-                            .bold()
-                    }
-                    .frame(width: 150, height: 150)
-                    .background(Color.green.opacity(0.1))
-                    .cornerRadius(20)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(lineWidth: 5)
-                            .foregroundColor(.green)
+                    .navigationDestination(for: String.self) { destination in
+                        switch destination {
+                            case "Productos":
+                                ProductTabView()
+                            case "Inventario":
+                                InventoryTabView()
+                            case "Mantenedor Precios":
+                                PriceMantainerTabView()
+                            default:
+                                Text("Vista no encontrada")
+                        }
                     }
                 }
-                .navigationDestination(for: String.self) { destination in
-                    if destination == "Productos" {
-                        ProductTabView()
-                    } else if destination == "Inventario" {
-                        InventoryTabView()
-                    } else if destination == "Precios" {
-                        PriceMantainerTabView()
-                    }
-                }
-                
                 Spacer()
             }
         }
@@ -120,5 +65,5 @@ struct MainMenuApp: View {
 
 #Preview {
     MainMenuApp()
-        .modelContainer(for: Product.self, inMemory: true)
+        .modelContainer(for: [Product.self, Inventory.self, Transaction.self], inMemory: true)
 }

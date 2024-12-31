@@ -1,10 +1,3 @@
-//
-//  InventoryTabView.swift
-//  MyERPAlpha
-//
-//  Created by Cristián Ortiz on 20-12-24.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -14,7 +7,6 @@ struct InventoryTabView: View {
     
     @Query var inventories: [Inventory]
     
-    @State private var path = [Inventory]()
     @State private var searchText = ""
     @State private var sortOrder = [SortDescriptor(\Inventory.product.productName)]
     
@@ -25,8 +17,18 @@ struct InventoryTabView: View {
             .navigationDestination(for: Inventory.self) { inventory in
                 InventoryDetailView(inventory: inventory)
             }
+            .toolbar {
+                Menu("Orden", systemImage: "arrow.up.arrow.down") {
+                    Picker("Sort", selection: $sortOrder) {
+                        Text("Nombre A-Z")
+                            .tag([SortDescriptor(\Inventory.product.productName)])
+                        
+                        Text("Nombre Z-A")
+                            .tag([SortDescriptor(\Inventory.product.productName, order: .reverse)])
+                    }
+                }
+            }
             .searchable(text: $searchText)
-
     }
 }
 

@@ -12,7 +12,9 @@ import SwiftData
 struct MyERPAlphaApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Product.self
+            Product.self,
+            Inventory.self,
+            Transaction.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true) //TODO: cambiar a false para que exista persistencia de datos
 

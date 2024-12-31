@@ -1,10 +1,3 @@
-//
-//  PriceMantainerTabView.swift
-//  MyERPAlpha
-//
-//  Created by Cristián Ortiz on 25-12-24.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -14,10 +7,8 @@ struct PriceMantainerTabView: View {
     
     @Query var transactions: [Transaction]
     
-    @State private var path = [Transaction]()
     @State private var searchText = ""
     @State private var sortOrder = [SortDescriptor(\Transaction.product.productName)]
-    
     
     var body: some View {
         
@@ -36,7 +27,6 @@ struct PriceMantainerTabView: View {
                             .tag([SortDescriptor(\Transaction.product.productName, order: .reverse)])
                     }
                 }
-                
             }
             .searchable(text: $searchText)
     }
