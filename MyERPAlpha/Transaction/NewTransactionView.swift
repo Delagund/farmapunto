@@ -1,9 +1,10 @@
 import SwiftUI
 
 struct NewTransactionView: View {
-    let transaction: Transaction
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    
+    let transaction: Transaction
     
     @State private var netPrice: Double = 0.0
     @State private var taxFee: Double = 19 //TODO: asignarlo a futuro a una configuracion global

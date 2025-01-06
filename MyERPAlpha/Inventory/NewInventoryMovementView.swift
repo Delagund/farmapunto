@@ -3,6 +3,7 @@ import SwiftUI
 // Vista para crear un nuevo movimiento de inventario
 struct NewInventoryMovementView: View {
     let inventory: Inventory
+    
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     
