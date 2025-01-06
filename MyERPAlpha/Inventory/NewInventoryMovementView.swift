@@ -102,14 +102,15 @@ struct NewInventoryMovementView: View {
         
         // Actualizar la cantidad en stock
         if movementType == .entrada {
-            inventory.qtyInStock += quantity
+            inventory.qtyInStock += movement.quantity
         } else {
-            inventory.qtyInStock -= quantity
+            inventory.qtyInStock -= movement.quantity
         }
         
         // Actualizar las relaciones bidireccionales
         inventory.movements.append(movement)
         inventory.product.movements.append(movement)
+        
         
         // Guardar los cambios en SwiftData
         try? context.save()

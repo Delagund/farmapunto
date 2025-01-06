@@ -7,9 +7,9 @@ struct PriceMantainerDetailView: View {
     @State private var showTransactionSheet = false
     
     var body: some View {
-        Form {
+        List {
+            // Sección de datos de producto
             Section("Detalle Producto") {
-                
                 LabeledContent("Código (SKU)", value: transaction.product.code)
                 
                 LabeledContent("Nombre Comercial", value: transaction.product.productName)
@@ -18,7 +18,7 @@ struct PriceMantainerDetailView: View {
                 
                 LabeledContent("Laboratorio", value: transaction.product.laboratoryName)
             }
-                
+                // Sección de costos, margen e impuestos
             Section("Costos") {
                 LabeledContent("Costo Neto") { Text("$\(transaction.netPrice, specifier: "%.0f")")
                 }

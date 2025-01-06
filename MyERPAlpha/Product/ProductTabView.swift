@@ -1,10 +1,11 @@
 import SwiftUI
 import SwiftData
 
+///vista de productos - con creacion de nuevo producto - búsqueda y filtro alfabetico.
 struct ProductTabView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) var dismiss
-    
+    @Binding var path: NavigationPath
     @State private var searchText = ""
     @State private var sortOrder = [SortDescriptor(\Product.productName)]
 
@@ -43,11 +44,14 @@ struct ProductTabView: View {
     
             let newTransaction = Transaction(product: newProduct, netPrice: 0.0, taxFee: 19, revenue: 20, storedFinalPrice: 0)
             context.insert(newTransaction)
+            
+            path.append(newProduct)
         }
     }
 }
 
-#Preview {
-    ProductTabView()
-        .modelContainer(for: Product.self, inMemory: true)
-}
+//#Preview {
+//    
+//    ProductTabView(path: path)
+//        .modelContainer(for: Product.self, inMemory: true)
+//}

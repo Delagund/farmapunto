@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 
+///Vista de lista de producto por stock
 struct InventoryView: View {
     @Environment(\.modelContext) private var context
     @Query var inventories: [Inventory]
@@ -10,6 +11,7 @@ struct InventoryView: View {
             if inventories.isEmpty {
                 ContentUnavailableView("Crea un Producto para Empezar", systemImage: "pills.fill")
             } else {
+//TODO: cambiar a LAzyVGrid para evitar que se carguen muchos datos de una sola vez
                 List {
                     ForEach(inventories) { inventory in
                         NavigationLink(value: inventory) {
@@ -17,15 +19,15 @@ struct InventoryView: View {
                                 VStack(alignment: .leading){
                                     Text("SKU: \(inventory.product.code)")
                                     Text(inventory.product.productName)
+                                        .fontWeight(.semibold)
                                 }
                                 .font(.caption2)
-                                .fontWeight(.semibold)
+                                
                                 Spacer()
                                 HStack{
-                                    Text("Stock:")
-                                    Text("\(inventory.qtyInStock, specifier: "%.0f")")
+                                    LabeledContent("Stock Actual:", value: "\(inventory.qtyInStock)")
                                 }
-                                .font(.system(size: 20, design: .rounded))
+                                .font(.system(size: 15, design: .rounded))
                                 .fontWeight(.medium)
                             }
                         }

@@ -10,24 +10,26 @@ struct PriceMantainerView: View {
             if transactions.isEmpty {
                 ContentUnavailableView("Crea un Producto para Empezar", systemImage: "pills.fill")
             } else {
+//TODO: cambiar a LAzyVGrid para evitar que se carguen muchos datos de una sola vez
                 List {
                     ForEach(transactions) { transaction in
                         NavigationLink(value: transaction) {
-                            VStack(alignment: .leading) {
-                                Text("SKU:\(transaction.product.code)")
-                                Text(transaction.product.productName)
+                            HStack(alignment: .center) {
+                                VStack(alignment: .leading) {
+                                    Text("SKU:\(transaction.product.code)")
+                                    Text(transaction.product.productName)
+                                        .fontWeight(.semibold)
+                                }
+                                .font(.caption2)
+                                
+                                Spacer()
+                                HStack{
+                                    Text("Precio: $")
+                                    Text("\(transaction.storedFinalPrice, specifier: "%.0f")")
+                                }
+                                .font(.system(size: 18, design: .rounded))
+                                .fontWeight(.medium)
                             }
-                            .font(.caption2)
-                            .fontWeight(.semibold)
-                            
-                            Spacer()
-                            
-                            HStack{
-                                Text("Precio: $")
-                                Text("\(transaction.storedFinalPrice, specifier: "%.0f")")
-                            }
-                            .font(.system(size: 20, design: .rounded))
-                            .fontWeight(.medium)
                         }
                     }
                 }

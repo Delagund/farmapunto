@@ -47,7 +47,7 @@ struct MainMenuApp: View {
                     .navigationDestination(for: String.self) { destination in
                         switch destination {
                             case "Productos":
-                                ProductTabView()
+                                ProductTabView(path: $path)
                             case "Inventario":
                                 InventoryTabView()
                             case "Mantenedor Precios":

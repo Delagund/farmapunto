@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 
+/// Vista de lista de productos
 struct ProductView: View {
     @Environment(\.modelContext) private var context
     @Query var products: [Product]
@@ -10,12 +11,13 @@ struct ProductView: View {
             if products.isEmpty {
                 ContentUnavailableView("Crea un Producto", systemImage: "pills.fill")
             } else {
+//TODO: cambiar formato a lazyVGrid para evitar sobrecarga con listado muy largo.
                 List {
                     ForEach(products, id: \.code) { product in
                         NavigationLink(value: product) {
                             VStack(alignment: .leading) {
                                 Text(product.productName)
-                                    .font(.title3)
+                                    .font(.callout)
                                     .fontWeight(.semibold)
                                 HStack{
                                     Text("SKU:")
@@ -43,11 +45,12 @@ struct ProductView: View {
             }
         }, sort: sortOrder)
     }
-    
+//TODO: revisar este método para poder borrar correctamente unn porducto y sus relaciones
     private func deleteItems(at offsets: IndexSet) {
         withAnimation {
             for offset in offsets {
                 let product = products[offset]
+    
                 context.delete(product)
             }
         }
