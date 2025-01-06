@@ -6,20 +6,23 @@ struct NewTransactionView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var netPrice: Double = 0.0
-    @State private var taxFee: Double = 0.0
+    @State private var taxFee: Double = 19 //TODO: asignarlo a futuro a una configuracion global
     @State private var revenue: Double = 0.0
     @State private var storedFinalPrice: Double = 0.0
     @State var date: Date = .now
     
-    //Precio neto (sin impuestos)
-    private var totalPrice: Double {
-        return netPrice / (100 - revenue) * 100
+    // Calculamos el precio base (costo + margen de ganancia)
+    var basePrice: Double {
+        let marginAmount = netPrice * (revenue / 100)
+        return netPrice + marginAmount
     }
     
     //Precio final redondeado
     private var finalPrice: Double {
-        var calculedPrice = totalPrice
-        calculedPrice += (calculedPrice * (taxFee / 100))
+        let taxRate = taxFee / 100
+        let taxAmount = basePrice * taxRate // Calculamos el impuesto
+        let calculedPrice = basePrice + taxAmount
+
         return calculedPrice.rounded(.toNearestOrAwayFromZero)
     }
     
@@ -83,11 +86,6 @@ struct NewTransactionView: View {
         
         guard taxFee >= 0 && taxFee <= 100 else {
             print("Error: El impuesto debe estar entre 0 y 100.")
-            return
-        }
-        
-        guard revenue >= 0 && revenue <= 100 else {
-            print("Error: El margen debe estar entre 0 y 100.")
             return
         }
         

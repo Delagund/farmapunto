@@ -14,7 +14,8 @@ struct MyERPAlphaApp: App {
         let schema = Schema([
             Product.self,
             Inventory.self,
-            Transaction.self
+            Transaction.self,
+            InventoryMovement.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true) //TODO: cambiar a false para que exista persistencia de datos
 

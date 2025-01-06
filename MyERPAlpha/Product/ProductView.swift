@@ -50,7 +50,6 @@ struct ProductView: View {
         withAnimation {
             for offset in offsets {
                 let product = products[offset]
-    
                 context.delete(product)
             }
         }

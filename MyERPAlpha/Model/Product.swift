@@ -15,17 +15,19 @@ class Product {
     var farmaForm: String   // forma farmaceutica, ej: comprimdos, jarabe, etc.
     var laboratoryName: String // nombre fabricante
     
-    @Relationship(deleteRule: .cascade, inverse: \Inventory.product) var inventory: [Inventory] = []
-    @Relationship(deleteRule: .cascade, inverse: \InventoryMovement.product) var movements: [InventoryMovement] = []
-    @Relationship(deleteRule: .cascade, inverse: \Transaction.product) var transaction: [Transaction] = []
+    @Relationship(deleteRule: .cascade, inverse: \Inventory.product) var inventory: [Inventory]
+    @Relationship(deleteRule: .cascade, inverse: \InventoryMovement.product) var movements: [InventoryMovement]
+    @Relationship(deleteRule: .cascade, inverse: \Transaction.product) var transaction: [Transaction]
 
-    init(code: String = "", productName: String = "", genericName: String = "", dosisQty: Double = 0.0, farmaForm: String = "", laboratoryName: String = "") {
+    init(code: String = "", productName: String = "", genericName: String = "", dosisQty: Double = 0.0, farmaForm: String = "", laboratoryName: String = "", inventory: [Inventory] = [], movements: [InventoryMovement] = [], transaction: [Transaction] = []) {
         self.code = code
         self.productName = productName
         self.genericName = genericName
         self.dosisQty = dosisQty
         self.farmaForm = farmaForm
         self.laboratoryName = laboratoryName
-        
+        self.inventory = inventory
+        self.movements = movements
+        self.transaction = transaction
     }
 }
