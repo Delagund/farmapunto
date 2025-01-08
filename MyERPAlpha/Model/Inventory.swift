@@ -10,7 +10,7 @@ class Inventory {
     var qtyInStock: Int                 // cantidad en inventario
     var movements: [InventoryMovement]  // historial de movimientos asociados al producto.
     
-    init(product: Product, qtyInStock: Int = 0) {
+    init(product: Product , qtyInStock: Int = 0) {
         self.product = product
         self.qtyInStock = qtyInStock
         self.movements = []

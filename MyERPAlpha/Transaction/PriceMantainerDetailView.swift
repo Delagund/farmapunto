@@ -3,35 +3,35 @@ import SwiftData
 
 //Vista del mantenedor de precios.
 struct PriceMantainerDetailView: View {
-    @Bindable var transaction: Transaction
-    @State private var showTransactionSheet = false
+    @Bindable var price: Price
+    @State private var showPriceSheet = false
     
     var body: some View {
         List {
             // Sección de datos de producto
             Section("Detalle Producto") {
-                LabeledContent("Código (SKU)", value: transaction.product.code)
+                LabeledContent("Código (SKU)", value: price.product.code)
                 
-                LabeledContent("Nombre Comercial", value: transaction.product.productName)
+                LabeledContent("Nombre Comercial", value: price.product.productName)
                 
-                LabeledContent("Forma Farmacéutica", value: transaction.product.farmaForm)
+                LabeledContent("Forma Farmacéutica", value: price.product.farmaForm)
                 
-                LabeledContent("Laboratorio", value: transaction.product.laboratoryName)
+                LabeledContent("Laboratorio", value: price.product.laboratoryName)
             }
                 // Sección de costos, margen e impuestos
             Section("Costos") {
-                LabeledContent("Costo Neto") { Text("$\(transaction.netPrice, specifier: "%.0f")")
+                LabeledContent("Costo Neto") { Text("$\(price.netPrice, specifier: "%.0f")")
                 }
                 
-                LabeledContent("Margen") { Text("\(transaction.revenue, specifier: "%.0f")%")
+                LabeledContent("Margen") { Text("\(price.revenue, specifier: "%.0f")%")
                 }
                 
-                LabeledContent("Impuesto (IVA)") { Text("\(transaction.taxFee, specifier: "%.0f")%")
+                LabeledContent("Impuesto (IVA)") { Text("\(price.taxFee, specifier: "%.0f")%")
                 }
             }
             
             Section("Precio Venta Actual") {
-                LabeledContent("Precio Venta") { Text("$\(transaction.storedFinalPrice, specifier: "%.0f")")
+                LabeledContent("Precio Venta") { Text("$\(price.storedFinalPrice, specifier: "%.0f")")
                 }
             }
         }
@@ -39,19 +39,19 @@ struct PriceMantainerDetailView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button(action: {
-                    showTransactionSheet = true
+                    showPriceSheet = true
                 }) {
                     Label("Cambio Precio", systemImage: "plus.circle")
                 }
             }
         }
-        .sheet(isPresented: $showTransactionSheet) {
-            NewTransactionView(transaction: transaction, date: Date())
+        .sheet(isPresented: $showPriceSheet) {
+            NewPriceView(price: price, date: Date())
         }
     }
 }
 
 #Preview {
-    PriceMantainerDetailView(transaction: transactionTest1)
-        .modelContainer(for: Transaction.self, inMemory: true)
+    PriceMantainerDetailView(price: transactionTest1)
+        .modelContainer(for: Price.self, inMemory: true)
 }

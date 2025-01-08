@@ -13,7 +13,7 @@ let inventoryTest1 = Inventory(product: testProduct1, qtyInStock: 345)
 
 let inventoryMoves1 = InventoryMovement(product: testProduct1, quantity: 11, type: .salida, reason: "venta", date: .now)
 
-let transactionTest1 = Transaction(product: testProduct1, netPrice: 1200, taxFee: 19, revenue: 20, storedFinalPrice: 2500)
+let transactionTest1 = Price(netPrice: 1200, taxFee: 19, revenue: 20, storedFinalPrice: 2500, product: testProduct1)
 
 let testProduct2 = Product(code: "78123000234",
                            productName: "CLORFENAMINA 4MG X 20 COMP",
@@ -25,7 +25,7 @@ let testProduct2 = Product(code: "78123000234",
 let inventoryTest2 = Inventory(product: testProduct2, qtyInStock: 298)
 let inventoryMoves2 = InventoryMovement(product: testProduct2, quantity: 35, type: .entrada, reason: "compra", date: .now)
 
-let transactionTest2 = Transaction(product: testProduct2, netPrice: 180, taxFee: 19, revenue: 20, storedFinalPrice: 990)
+let transactionTest2 = Price(netPrice: 180, taxFee: 19, revenue: 20, storedFinalPrice: 990, product: testProduct2)
 
 let myTestProducts = [testProduct1, testProduct2]
 let myInventoriesTest = [inventoryTest1, inventoryTest2]

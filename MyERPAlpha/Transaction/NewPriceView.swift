@@ -1,14 +1,14 @@
 import SwiftUI
 
-struct NewTransactionView: View {
+struct NewPriceView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     
-    let transaction: Transaction
+    let price: Price
     
     @State private var netPrice: Double = 0.0
-    @State private var taxFee: Double = 19 //TODO: asignarlo a futuro a una configuracion global
-    @State private var revenue: Double = 0.0
+    @State private var taxFee: Double = 19.0 //TODO: asignarlo a futuro a una configuracion global
+    @State private var revenue: Double = 20.0
     @State private var storedFinalPrice: Double = 0.0
     @State var date: Date = .now
     
@@ -80,22 +80,22 @@ struct NewTransactionView: View {
     
     private func saveNewPrice() {
         // Validación básica de los datos
-        guard netPrice > 0 else {
-            print("Error: El precio neto debe ser mayor que 0.")
+        guard netPrice >= 0 else {
+            print("Error: El precio neto no puede ser negativo.")
             return
         }
         
-        guard taxFee >= 0 && taxFee <= 100 else {
+        guard taxFee >= 0 else {
             print("Error: El impuesto debe estar entre 0 y 100.")
             return
         }
         
         // Actualización de las propiedades de la transacción
-        transaction.netPrice = netPrice
-        transaction.taxFee = taxFee
-        transaction.revenue = revenue
-        transaction.date = date
-        transaction.storedFinalPrice = finalPrice
+        price.netPrice = netPrice
+        price.taxFee = taxFee
+        price.revenue = revenue
+        price.date = date
+        price.storedFinalPrice = finalPrice
         
         // Guardar los cambios en el contexto
         do {
@@ -109,5 +109,5 @@ struct NewTransactionView: View {
 }
 
 #Preview {
-    NewTransactionView(transaction: transactionTest1, date: .now)
+    NewPriceView(price: transactionTest1, date: .now)
 }

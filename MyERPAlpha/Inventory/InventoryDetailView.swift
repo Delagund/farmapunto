@@ -4,7 +4,7 @@ import SwiftData
 // Vista principal para mostrar el inventario.
 struct InventoryDetailView: View {
     let inventory: Inventory
-    @Environment(\.modelContext) private var context
+//    @Environment(\.modelContext) private var context TODO: eliminar
     @State private var showingMovementSheet = false
     
     // Ordenamos los movimientos por fecha, más reciente primero

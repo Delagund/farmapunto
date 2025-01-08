@@ -2,12 +2,8 @@ import SwiftUI
 import SwiftData
 
 ///Vista de listado de productos con su stock disponible. Incluye búsqueda y filtro de orden alfabético
-struct InventoryTabView: View {
+struct InventoryListView: View {
     @Environment(\.modelContext) private var context
-    @Environment(\.dismiss) var dismiss
-    
-    @Query var inventories: [Inventory]
-    
     @State private var searchText = ""
     @State private var sortOrder = [SortDescriptor(\Inventory.product.productName)]
     
@@ -34,5 +30,5 @@ struct InventoryTabView: View {
 }
 
 #Preview {
-    InventoryTabView()
+    InventoryListView()
 }

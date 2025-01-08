@@ -3,7 +3,7 @@ import SwiftData
 
 ///Vista de lista de producto por stock
 struct InventoryView: View {
-    @Environment(\.modelContext) private var context
+   // @Environment(\.modelContext) private var context
     @Query var inventories: [Inventory]
     
     var body: some View {
@@ -11,7 +11,7 @@ struct InventoryView: View {
             if inventories.isEmpty {
                 ContentUnavailableView("Crea un Producto para Empezar", systemImage: "pills.fill")
             } else {
-//TODO: cambiar a LAzyVGrid para evitar que se carguen muchos datos de una sola vez
+//TODO: cambiar a lazyVGrid para evitar que se carguen muchos datos de una sola vez
                 List {
                     ForEach(inventories) { inventory in
                         NavigationLink(value: inventory) {

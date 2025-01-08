@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 /// Vista de lista de productos
-struct ProductView: View {
+struct ProductList: View {
     @Environment(\.modelContext) private var context
     @Query var products: [Product]
     
@@ -51,12 +51,13 @@ struct ProductView: View {
             for offset in offsets {
                 let product = products[offset]
                 context.delete(product)
+                try? context.save()
             }
         }
     }
 }
 
 #Preview {
-    ProductView()
+    ProductList()
         
 }

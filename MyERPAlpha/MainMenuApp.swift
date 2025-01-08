@@ -40,18 +40,18 @@ struct MainMenuApp: View {
                                          buttonName: squareOption.buttonName,
                                          buttonColor: squareOption.buttonColor)
                             .onTapGesture {
-                                path.append(squareOption.buttonName) // Navega a la vista de inventario
+                                path.append(squareOption.buttonName) // Navega a la vista que corresponda
                             }
                         }
                     }
                     .navigationDestination(for: String.self) { destination in
                         switch destination {
                             case "Productos":
-                                ProductTabView(path: $path)
+                                ProductListView(path: $path)
                             case "Inventario":
-                                InventoryTabView()
+                                InventoryListView()
                             case "Mantenedor Precios":
-                                PriceMantainerTabView()
+                                PriceMantainerListView()
                             default:
                                 Text("Vista no encontrada")
                         }
@@ -65,5 +65,5 @@ struct MainMenuApp: View {
 
 #Preview {
     MainMenuApp()
-        .modelContainer(for: [Product.self, Inventory.self, Transaction.self], inMemory: true)
+        .modelContainer(for: [Product.self, Inventory.self, Price.self], inMemory: true)
 }

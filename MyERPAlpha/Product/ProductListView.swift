@@ -2,16 +2,17 @@ import SwiftUI
 import SwiftData
 
 ///vista de productos - con creacion de nuevo producto - búsqueda y filtro alfabetico.
-struct ProductTabView: View {
+struct ProductListView: View {
     @Environment(\.modelContext) private var context
-    @Environment(\.dismiss) var dismiss
+    
     @Binding var path: NavigationPath
+    
     @State private var searchText = ""
     @State private var sortOrder = [SortDescriptor(\Product.productName)]
 
     var body: some View {
         
-        ProductView(searchString: searchText, sortOrder: sortOrder)
+        ProductList(searchString: searchText, sortOrder: sortOrder)
             .navigationTitle("Productos")
             .navigationDestination(for: Product.self) { product in
                 EditProductView(product: product)
@@ -37,21 +38,25 @@ struct ProductTabView: View {
     private func addItem() {
         withAnimation {
             let newProduct = Product(code: "", productName: "PRODUCTO")
-            context.insert(newProduct)
-            
             let newInventory = Inventory(product: newProduct, qtyInStock: 0)
+            let newPrice = Price(netPrice: 0, product: newProduct)
+            
             context.insert(newInventory)
-    
-            let newTransaction = Transaction(product: newProduct, netPrice: 0.0, taxFee: 19, revenue: 20, storedFinalPrice: 0)
-            context.insert(newTransaction)
+            context.insert(newPrice)
+            
+            do {
+                try context.save()
+            } catch {
+                print(error.localizedDescription)
+            }
             
             path.append(newProduct)
         }
     }
 }
-
+//
 //#Preview {
 //    
-//    ProductTabView(path: path)
+//    ProductTabView(path: "producto")
 //        .modelContainer(for: Product.self, inMemory: true)
 //}
