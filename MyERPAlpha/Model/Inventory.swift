@@ -5,15 +5,15 @@ import SwiftData
 
 @Model
 class Inventory {
-    @Relationship var product: Product
+    @Relationship(inverse: \Product.inventory) var product: Product?
     
-    var qtyInStock: Int                 // cantidad en inventario
+    var quantity: Int                 // cantidad en inventario
     var movements: [InventoryMovement]  // historial de movimientos asociados al producto.
     
-    init(product: Product , qtyInStock: Int = 0) {
+    init(product: Product , quantity: Int = 0, movements: [InventoryMovement] = [] ) {
         self.product = product
-        self.qtyInStock = qtyInStock
-        self.movements = []
+        self.quantity = quantity
+        self.movements = movements
     }
     
     

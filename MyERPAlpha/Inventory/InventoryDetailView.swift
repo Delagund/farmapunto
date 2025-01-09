@@ -3,36 +3,29 @@ import SwiftData
 
 // Vista principal para mostrar el inventario.
 struct InventoryDetailView: View {
-    let inventory: Inventory
-//    @Environment(\.modelContext) private var context TODO: eliminar
+    @Bindable var product: Product
     @State private var showingMovementSheet = false
     
     // Ordenamos los movimientos por fecha, más reciente primero
     var sortedMovements: [InventoryMovement] {
-        inventory.movements.sorted { $0.date > $1.date }
+        product.movements.sorted { $0.date > $1.date }
     }
     
     var body: some View {
         List {
             // Sección de información del producto farmacéutico
             Section("Stock en Inventario") {
-                LabeledContent("Código (SKU)", value: inventory.product.code)
+                LabeledContent("Código (SKU)", value: product.code)
                 
-                LabeledContent("Nombre Comercial", value: inventory.product.productName)
+                LabeledContent("Nombre Comercial", value: product.name)
                 
-                LabeledContent("Principio Activo", value: inventory.product.genericName)
+                LabeledContent("Forma Farmacéutica", value: product.dosageForm.rawValue)
                 
-                LabeledContent("Forma Farmacéutica", value: inventory.product.farmaForm)
-                
-                LabeledContent("Dosis por Envase") {
-                    Text("\(inventory.product.dosisQty, specifier: "%.2f")")
-                }
-                
-                LabeledContent("Laboratorio", value: inventory.product.laboratoryName)
+                LabeledContent("Laboratorio", value: product.laboratoryName)
                 
                 LabeledContent("Stock Actual") {
-                    Text("\(inventory.qtyInStock) unidades")
-                        .foregroundColor(inventory.qtyInStock < 10 ? .red : .secondary)
+                    Text("\(product.stockQuantity) unidades")
+                        .foregroundColor(product.stockQuantity < 10 ? .red : .secondary)
                 }
             }
             
@@ -49,7 +42,7 @@ struct InventoryDetailView: View {
                 }
             }
         }
-        .navigationTitle("\(inventory.product.productName)")
+        .navigationTitle("\(product.name)")
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button(action: {
@@ -60,16 +53,16 @@ struct InventoryDetailView: View {
             }
             
             ToolbarItem(placement: .status) {
-                StockStatusView(qtyInStock: inventory.qtyInStock)
+                StockStatusView(qtyInStock: product.stockQuantity)
             }
         }
         .sheet(isPresented: $showingMovementSheet) {
-            NewInventoryMovementView(inventory: inventory)
+            NewInventoryMovementView(product: product)
         }
     }
 }
 
 #Preview {
-    InventoryDetailView(inventory: inventoryTest1)
-        .modelContainer(for: Inventory.self, inMemory: true)
+    InventoryDetailView(product: testProduct1)
+        .modelContainer(for: Product.self, inMemory: true)
 }

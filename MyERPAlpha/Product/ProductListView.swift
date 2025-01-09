@@ -8,7 +8,7 @@ struct ProductListView: View {
     @Binding var path: NavigationPath
     
     @State private var searchText = ""
-    @State private var sortOrder = [SortDescriptor(\Product.productName)]
+    @State private var sortOrder = [SortDescriptor(\Product.name)]
 
     var body: some View {
         
@@ -21,10 +21,10 @@ struct ProductListView: View {
                 Menu("Orden", systemImage: "arrow.up.arrow.down") {
                     Picker("Sort", selection: $sortOrder) {
                         Text("Nombre A-Z")
-                            .tag([SortDescriptor(\Product.productName)])
+                            .tag([SortDescriptor(\Product.name)])
                         
                         Text("Nombre Z-A")
-                            .tag([SortDescriptor(\Product.productName, order: .reverse)])
+                            .tag([SortDescriptor(\Product.name, order: .reverse)])
                     }
                 }
                 Button(action: addItem) {
@@ -37,12 +37,9 @@ struct ProductListView: View {
 
     private func addItem() {
         withAnimation {
-            let newProduct = Product(code: "", productName: "PRODUCTO")
-            let newInventory = Inventory(product: newProduct, qtyInStock: 0)
-            let newPrice = Price(netPrice: 0, product: newProduct)
+            let newProduct = Product(code: "", name: "PRODUCTO")
             
-            context.insert(newInventory)
-            context.insert(newPrice)
+            context.insert(newProduct)
             
             do {
                 try context.save()
@@ -54,9 +51,9 @@ struct ProductListView: View {
         }
     }
 }
-//
-//#Preview {
-//    
-//    ProductTabView(path: "producto")
-//        .modelContainer(for: Product.self, inMemory: true)
-//}
+
+#Preview {
+    @Previewable @State var path = NavigationPath()
+    ProductListView(path: $path)
+        .modelContainer(for: Product.self, inMemory: true)
+}

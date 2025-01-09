@@ -11,17 +11,14 @@ import SwiftData
 @Model
 class InventoryMovement {
     @Attribute(.unique) var id: UUID
-    
-    @Relationship var product: Product
-    
+
     var quantity: Int       // unidades del inventario involucradas en el movimientos
     var type: MovementType  // tipo de movimiento de inventario
     var reason: String      // Descripción detallada que se puede escribir para explicar el movimmiento
     var date: Date          // Fecha en que se realiza el movimiento.
     
-    init(id: UUID = UUID(), product: Product, quantity: Int = 0, type: MovementType = MovementType.entrada, reason: String = "", date: Date = Date()) {
+    init(id: UUID = UUID(), quantity: Int = 0, type: MovementType = MovementType.entrada, reason: String = "", date: Date = Date()) {
         self.id = id
-        self.product = product
         self.quantity = quantity
         self.type = type
         self.reason = reason

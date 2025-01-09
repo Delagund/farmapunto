@@ -2,30 +2,30 @@ import SwiftUI
 import SwiftData
 
 ///Vista de lista de producto por stock
-struct InventoryView: View {
-   // @Environment(\.modelContext) private var context
-    @Query var inventories: [Inventory]
+struct InventoryList: View {
+    @Environment(\.modelContext) private var context
+    @Query var products: [Product]
     
     var body: some View {
         Group{
-            if inventories.isEmpty {
+            if products.isEmpty {
                 ContentUnavailableView("Crea un Producto para Empezar", systemImage: "pills.fill")
             } else {
 //TODO: cambiar a lazyVGrid para evitar que se carguen muchos datos de una sola vez
                 List {
-                    ForEach(inventories) { inventory in
-                        NavigationLink(value: inventory) {
+                    ForEach(products, id: \.code) { product in
+                        NavigationLink(value: product) {
                             HStack(alignment: .center) {
                                 VStack(alignment: .leading){
-                                    Text("SKU: \(inventory.product.code)")
-                                    Text(inventory.product.productName)
+                                    Text("SKU: \(product.code)")
+                                    Text(product.name)
                                         .fontWeight(.semibold)
                                 }
                                 .font(.caption2)
                                 
-                                Spacer()
                                 HStack{
-                                    LabeledContent("Stock Actual:", value: "\(inventory.qtyInStock)")
+                                    Spacer()
+                                    LabeledContent("Stock Actual:", value: "\(product.stockQuantity) un.")
                                 }
                                 .font(.system(size: 15, design: .rounded))
                                 .fontWeight(.medium)
@@ -38,18 +38,18 @@ struct InventoryView: View {
     }
     
     
-    init(searchString: String = "", sortOrder: [SortDescriptor<Inventory>] = []) {
-        _inventories = Query(filter: #Predicate { inventory in
+    init(searchString: String = "", sortOrder: [SortDescriptor<Product>] = []) {
+        _products = Query(filter: #Predicate { product in
             if searchString.isEmpty {
                 true
             } else {
-                inventory.product.productName.localizedStandardContains(searchString)
-                || inventory.product.code.localizedStandardContains(searchString)
+                product.name.localizedStandardContains(searchString)
+                || product.code.localizedStandardContains(searchString)
             }
         }, sort: sortOrder)
     }
 }
 
 #Preview {
-    InventoryView()
+    InventoryList()
 }

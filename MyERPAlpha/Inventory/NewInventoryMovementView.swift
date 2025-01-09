@@ -2,27 +2,24 @@ import SwiftUI
 
 // Vista para crear un nuevo movimiento de inventario
 struct NewInventoryMovementView: View {
-    let inventory: Inventory
+    @Bindable var product: Product
     
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     
     @State private var movementType: InventoryMovement.MovementType = .entrada
-    @State private var quantity: Int = 1
+    @State private var quantity: Int = 0
     @State private var reason: String = ""
     @State private var showingAlert = false
     @State private var alertMessage = ""
-    
-    // Constantes para validación
-    private let maxQuantityPerMovement = 1000
     
     var body: some View {
         NavigationView {
             Form {
                 Section("Producto") {
-                    LabeledContent("Código", value: inventory.product.code)
-                    LabeledContent("Nombre", value: inventory.product.productName)
-                    LabeledContent("Presentación", value: inventory.product.farmaForm)
+                    LabeledContent("Código", value: product.code)
+                    LabeledContent("Nombre", value: product.name)
+                    LabeledContent("Presentación", value: product.dosageForm.rawValue)
                 }
                 
                 Section("Detalles del Movimiento") {
@@ -47,12 +44,12 @@ struct NewInventoryMovementView: View {
                 }
                 
                 Section("Información de Stock") {
-                    LabeledContent("Stock Actual", value: "\(inventory.qtyInStock)")
+                    LabeledContent("Stock Actual", value: "\(product.stockQuantity)")
                     
                     if movementType == .salida {
                         LabeledContent("Stock Resultante") {
-                            Text("\(max(0, inventory.qtyInStock - quantity))")
-                                .foregroundColor(inventory.qtyInStock - quantity < 0 ? .red : .secondary)
+                            Text("\(max(0, product.stockQuantity - quantity))")
+                                .foregroundColor(product.stockQuantity - quantity < 0 ? .red : .secondary)
                         }
                     }
                 }
@@ -87,7 +84,7 @@ struct NewInventoryMovementView: View {
             return
         }
         
-        if movementType == .salida && quantity > inventory.qtyInStock {
+        if movementType == .salida && quantity > product.stockQuantity {
             alertMessage = "Stock insuficiente para realizar esta salida"
             showingAlert = true
             return
@@ -95,7 +92,6 @@ struct NewInventoryMovementView: View {
         
         // Crear el nuevo movimiento
         let movement = InventoryMovement(
-            product: inventory.product,
             quantity: quantity,
             type: movementType,
             reason: reason
@@ -103,15 +99,13 @@ struct NewInventoryMovementView: View {
         
         // Actualizar la cantidad en stock
         if movementType == .entrada {
-            inventory.qtyInStock += movement.quantity
+            product.stockQuantity += movement.quantity
         } else {
-            inventory.qtyInStock -= movement.quantity
+            product.stockQuantity -= movement.quantity
         }
         
         // Actualizar las relaciones bidireccionales
-        inventory.movements.append(movement)
-        inventory.product.movements.append(movement)
-        
+        product.movements.append(movement)
         
         // Guardar los cambios en SwiftData
         try? context.save()
@@ -121,5 +115,5 @@ struct NewInventoryMovementView: View {
 }
 
 #Preview {
-    NewInventoryMovementView(inventory: inventoryTest1)
+    NewInventoryMovementView(product: testProduct1)
 }

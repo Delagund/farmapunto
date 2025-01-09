@@ -1,19 +1,18 @@
 import SwiftUI
 import SwiftData
 
-///Vista de listado de productos con su stock disponible. Incluye búsqueda y filtro de orden alfabético
-struct InventoryListView: View {
-   //TODO: eliminar -> @Environment(\.modelContext) private var context
-
+struct PriceListView: View {
+    //TODO: eliminar -> @Environment(\.modelContext) private var context
+    
     @State private var searchText = ""
     @State private var sortOrder = [SortDescriptor(\Product.name)]
     
     var body: some View {
-       
-        InventoryList(searchString: searchText, sortOrder: sortOrder)
-            .navigationTitle("Inventario")
+        
+        PriceView(searchString: searchText, sortOrder: sortOrder)
+            .navigationTitle("Mantenedor Precios")
             .navigationDestination(for: Product.self) { product in
-                InventoryDetailView(product: product)
+                PriceMantainerDetailView(product: product)
             }
             .toolbar {
                 Menu("Orden", systemImage: "arrow.up.arrow.down") {
@@ -31,5 +30,5 @@ struct InventoryListView: View {
 }
 
 #Preview {
-    InventoryListView()
+    PriceListView()
 }

@@ -1,15 +1,11 @@
-//
-//  EditProductView.swift
-//  MyERPAlpha
-//
-//  Created by Cristián Ortiz on 13-12-24.
-//
+//Vista de edición de producto.
 
 import SwiftUI
 import SwiftData
 
 struct EditProductView: View {
     @Bindable var product: Product
+    @State private var formType: Product.FormType = .comprimidos
     
     var body: some View {
         
@@ -23,7 +19,7 @@ struct EditProductView: View {
             HStack(alignment: .center) {
                 Text("Nombre:")
                     .bold()
-                TextField("Producto", text: $product.productName, axis: .horizontal)
+                TextField("Producto", text: $product.name, axis: .horizontal)
                     .textInputAutocapitalization(.characters)
             }
             HStack(alignment: .center) {
@@ -39,10 +35,12 @@ struct EditProductView: View {
                     .keyboardType(.numberPad)
             }
             HStack(alignment: .center) {
-                Text("Presentación:")
-                    .bold()
-                TextField("Forma Farmacéuticas", text: $product.farmaForm)
-                    .textInputAutocapitalization(.characters)
+                Picker("Presentación:", selection: $formType) {
+                    ForEach(Product.FormType.allCases, id: \.self) { type in
+                        Text(type.rawValue).tag(type)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle()) //TODO: Revisar
             }
             HStack(alignment: .center) {
                 Text("Laboratorio:")

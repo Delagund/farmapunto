@@ -1,33 +1,33 @@
 import SwiftUI
 import SwiftData
 
-struct PriceMantainerView: View {
-   
-    @Query var prices: [Price]
+struct PriceView: View {
+    @Environment(\.modelContext) private var context
+    @Query var products: [Product]
     
     var body: some View {
         Group{
-            if prices.isEmpty {
+            if products.isEmpty {
                 ContentUnavailableView("Crea un Producto para Empezar", systemImage: "pills.fill")
             } else {
-//TODO: cambiar a LAzyVGrid para evitar que se carguen muchos datos de una sola vez
+//TODO: cambiar a LazyVGrid para evitar que se carguen muchos datos de una sola vez
                 List {
-                    ForEach(prices) { price in
-                        NavigationLink(value: price) {
+                    ForEach(products) { product in
+                        NavigationLink(value: product) {
                             HStack(alignment: .center) {
                                 VStack(alignment: .leading) {
-                                    Text("SKU:\(price.product.code)")
-                                    Text(price.product.productName)
+                                    Text("SKU:\(product.code)")
+                                    Text(product.name)
                                         .fontWeight(.semibold)
                                 }
                                 .font(.caption2)
                                 
                                 Spacer()
                                 HStack{
-                                    Text("Precio: $")
-                                    Text("\(price.storedFinalPrice, specifier: "%.0f")")
+                                    Text("Precio Venta: $")
+                                    Text("\(product.currentPrice, specifier: "%.0f")")
                                 }
-                                .font(.system(size: 18, design: .rounded))
+                                .font(.system(size: 15, design: .rounded))
                                 .fontWeight(.medium)
                             }
                         }
@@ -38,13 +38,13 @@ struct PriceMantainerView: View {
     }
     
     //inicializador de la busqueda y orden
-    init(searchString: String = "", sortOrder: [SortDescriptor<Price>] = []) {
-        _prices = Query(filter: #Predicate { price in
+    init(searchString: String = "", sortOrder: [SortDescriptor<Product>] = []) {
+        _products = Query(filter: #Predicate { product in
             if searchString.isEmpty {
                 true
             } else {
-                price.product.productName.localizedStandardContains(searchString)
-                || price.product.code.localizedStandardContains(searchString)
+                product.name.localizedStandardContains(searchString)
+                || product.code.localizedStandardContains(searchString)
             }
         }, sort: sortOrder)
     }
@@ -52,5 +52,5 @@ struct PriceMantainerView: View {
 }
 
 #Preview {
-    PriceMantainerView()
+    PriceView()
 }

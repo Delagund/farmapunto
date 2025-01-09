@@ -3,35 +3,46 @@ import SwiftData
 
 //Vista del mantenedor de precios.
 struct PriceMantainerDetailView: View {
-    @Bindable var price: Price
+    @Bindable var product: Product
     @State private var showPriceSheet = false
+    
+    @State private var netPrice: Double = 0.0
+    @State private var revenue: Double = 0.0
+    @State private var taxFee: Double = 19.0
+    @State private var finalPrice: Double = 0.0
+    
+    var sortedPrices: [Price] {
+        product.price.sorted { $0.date > $1.date}
+    }
     
     var body: some View {
         List {
             // Sección de datos de producto
             Section("Detalle Producto") {
-                LabeledContent("Código (SKU)", value: price.product.code)
+                LabeledContent("Código (SKU)", value: product.code)
                 
-                LabeledContent("Nombre Comercial", value: price.product.productName)
+                LabeledContent("Nombre Comercial", value: product.name)
                 
-                LabeledContent("Forma Farmacéutica", value: price.product.farmaForm)
+                LabeledContent("Forma Farmacéutica", value: product.dosageForm.rawValue)
                 
-                LabeledContent("Laboratorio", value: price.product.laboratoryName)
+                LabeledContent("Laboratorio", value: product.laboratoryName)
             }
-                // Sección de costos, margen e impuestos
-            Section("Costos") {
-                LabeledContent("Costo Neto") { Text("$\(price.netPrice, specifier: "%.0f")")
-                }
-                
-                LabeledContent("Margen") { Text("\(price.revenue, specifier: "%.0f")%")
-                }
-                
-                LabeledContent("Impuesto (IVA)") { Text("\(price.taxFee, specifier: "%.0f")%")
+            // Sección de precio de venta a público.
+            Section("Precio Venta Actual") {
+                LabeledContent("Precio Venta") { Text("$\(product.currentPrice, specifier: "%.0f")")
                 }
             }
             
-            Section("Precio Venta Actual") {
-                LabeledContent("Precio Venta") { Text("$\(price.storedFinalPrice, specifier: "%.0f")")
+            // Sección de movimientos de inventario
+            Section("Historial de Movimientos") {
+                if sortedPrices.isEmpty {
+                    Text("No hay movimientos registrados")
+                        .foregroundColor(.secondary)
+                        .italic()
+                } else {
+                    ForEach(sortedPrices, id: \.date) { price in
+                        PriceMovementRow(price: price)
+                    }
                 }
             }
         }
@@ -46,12 +57,13 @@ struct PriceMantainerDetailView: View {
             }
         }
         .sheet(isPresented: $showPriceSheet) {
+            let price = Price(product: product)
             NewPriceView(price: price, date: Date())
         }
     }
 }
 
 #Preview {
-    PriceMantainerDetailView(price: transactionTest1)
+    PriceMantainerDetailView(product: testProduct2)
         .modelContainer(for: Price.self, inMemory: true)
 }

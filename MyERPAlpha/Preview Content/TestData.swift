@@ -2,28 +2,28 @@
 import Foundation
 
 let testProduct1 = Product(code: "7800060005723",
-                           productName: "AB antiséptico x 12 comprimidos",
+                           name: "AB antiséptico x 12 comprimidos",
                            genericName: "CLORHEXIDINA",
                            dosisQty: 12.0,
-                           farmaForm: "COMPRIMIDOS",
+                           dosageForm: .comprimidos,
                            laboratoryName: "Saval"
                     )
 
-let inventoryTest1 = Inventory(product: testProduct1, qtyInStock: 345)
+let inventoryTest1 = Inventory(product: testProduct1, quantity: 345)
 
-let inventoryMoves1 = InventoryMovement(product: testProduct1, quantity: 11, type: .salida, reason: "venta", date: .now)
+let inventoryMoves1 = InventoryMovement(quantity: 11, type: .salida, reason: "venta", date: .now)
 
 let transactionTest1 = Price(netPrice: 1200, taxFee: 19, revenue: 20, storedFinalPrice: 2500, product: testProduct1)
 
 let testProduct2 = Product(code: "78123000234",
-                           productName: "CLORFENAMINA 4MG X 20 COMP",
+                           name: "CLORFENAMINA 4MG X 20 COMP",
                            genericName: "CLORFENAMINA",
                            dosisQty: 12.0,
-                           farmaForm: "COMPRIMIDOS",
+                           dosageForm: .crema,
                            laboratoryName: "LAB. CHILE"
                     )
-let inventoryTest2 = Inventory(product: testProduct2, qtyInStock: 298)
-let inventoryMoves2 = InventoryMovement(product: testProduct2, quantity: 35, type: .entrada, reason: "compra", date: .now)
+let inventoryTest2 = Inventory(product: testProduct2, quantity: 298)
+let inventoryMoves2 = InventoryMovement(quantity: 35, type: .entrada, reason: "compra", date: .now)
 
 let transactionTest2 = Price(netPrice: 180, taxFee: 19, revenue: 20, storedFinalPrice: 990, product: testProduct2)
 

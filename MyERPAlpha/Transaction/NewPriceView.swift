@@ -96,6 +96,7 @@ struct NewPriceView: View {
         price.revenue = revenue
         price.date = date
         price.storedFinalPrice = finalPrice
+        price.product?.currentPrice = finalPrice
         
         // Guardar los cambios en el contexto
         do {

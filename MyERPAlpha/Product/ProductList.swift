@@ -16,7 +16,7 @@ struct ProductList: View {
                     ForEach(products, id: \.code) { product in
                         NavigationLink(value: product) {
                             VStack(alignment: .leading) {
-                                Text(product.productName)
+                                Text(product.name)
                                     .font(.callout)
                                     .fontWeight(.semibold)
                                 HStack{
@@ -40,7 +40,7 @@ struct ProductList: View {
             if searchString.isEmpty {
                 true
             } else {
-                product.productName.localizedStandardContains(searchString)
+                product.name.localizedStandardContains(searchString)
                 || product.code.localizedStandardContains(searchString)
             }
         }, sort: sortOrder)

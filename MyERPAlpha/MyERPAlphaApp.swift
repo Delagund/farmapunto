@@ -20,7 +20,7 @@ struct MyERPAlphaApp: App {
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true) //TODO: cambiar a false para que exista persistencia de datos
 
         do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            return try ModelContainer(for: schema, configurations: modelConfiguration)
         } catch {
             print("Could not create ModelContainer: \(error)")
             fatalError()
