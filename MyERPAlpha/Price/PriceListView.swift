@@ -31,4 +31,5 @@ struct PriceListView: View {
 
 #Preview {
     PriceListView()
+        .modelContainer(previewContainer)
 }

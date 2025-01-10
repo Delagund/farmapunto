@@ -3,8 +3,6 @@ import SwiftData
 
 ///Vista de listado de productos con su stock disponible. Incluye búsqueda y filtro de orden alfabético
 struct InventoryListView: View {
-   //TODO: eliminar -> @Environment(\.modelContext) private var context
-
     @State private var searchText = ""
     @State private var sortOrder = [SortDescriptor(\Product.name)]
     
@@ -32,4 +30,5 @@ struct InventoryListView: View {
 
 #Preview {
     InventoryListView()
+        .modelContainer(previewContainer)
 }

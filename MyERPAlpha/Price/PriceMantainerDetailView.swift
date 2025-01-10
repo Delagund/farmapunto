@@ -58,12 +58,13 @@ struct PriceMantainerDetailView: View {
         }
         .sheet(isPresented: $showPriceSheet) {
             let price = Price(product: product)
-            NewPriceView(price: price, date: Date())
+            NewPriceView(price: price)
         }
     }
 }
 
 #Preview {
-    PriceMantainerDetailView(product: testProduct2)
+    PriceMantainerDetailView(product: testProduct1)
         .modelContainer(for: Price.self, inMemory: true)
+        
 }

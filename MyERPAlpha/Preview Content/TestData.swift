@@ -6,7 +6,22 @@ let testProduct1 = Product(code: "7800060005723",
                            genericName: "CLORHEXIDINA",
                            dosisQty: 12.0,
                            dosageForm: .comprimidos,
-                           laboratoryName: "SAVAL"
+                           laboratoryName: "SAVAL",
+                           currentPrice: 2490,
+                           stockQuantity: 12,
+                           createdAt: .now,
+                           updateAt: Date(timeIntervalSinceNow: 12000),
+                           inventory: [
+                            Inventory(quantity: 12,
+                                      movements: [
+                                InventoryMovement(quantity: 5, type: .salida, reason: "venta", date: Date(timeIntervalSinceNow: 86400)),
+                                InventoryMovement(quantity:17, type: .entrada, reason: "Compra", date: .now)
+                            ])
+                           ],
+                           price: [
+                            Price(netPrice: 1600, taxFee: 19, revenue: 50, date: .now, storedFinalPrice: 2490),
+                            Price(netPrice: 1590, taxFee: 19, revenue: 50, date: Date(timeIntervalSinceNow: 86400), storedFinalPrice: 2400)
+                           ]
                     )
 
 let inventoryTest1 = Inventory(product: testProduct1, quantity: 345)

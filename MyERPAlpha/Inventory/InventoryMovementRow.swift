@@ -8,11 +8,23 @@ struct InventoryMovementRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Image(systemName: movement.type == .entrada ? "arrow.down.circle.fill" : "arrow.up.circle.fill")
-                    .foregroundColor(movement.type == .entrada ? .green : .red)
-                
-                Text(movement.type.description)
-                    .font(.headline)
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: movement.type == .entrada ? "arrow.down.circle.fill" : "arrow.up.circle.fill")
+                            .foregroundColor(movement.type == .entrada ? .green : .red)
+                        
+                        Text(movement.type.description)
+                            .font(.headline)
+                    }
+                    
+                    if !movement.reason.isEmpty {
+                        Text(movement.reason)
+                            .font(.subheadline)
+                            .foregroundColor(.primary)
+                            .frame(width: 150, alignment: .leading)
+                        
+                    }
+                }
                 
                 Spacer()
                 
@@ -26,15 +38,8 @@ struct InventoryMovementRow: View {
                         .foregroundColor(.secondary)
                 }
             }
-            
-            if !movement.reason.isEmpty {
-                Text(movement.reason)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .padding(.top, 2)
-            }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 6)
     }
 }
 

@@ -14,18 +14,19 @@ struct PriceView: View {
                 List {
                     ForEach(products) { product in
                         NavigationLink(value: product) {
-                            HStack(alignment: .center) {
+                            HStack(spacing: 5) {
                                 VStack(alignment: .leading) {
                                     Text("SKU:\(product.code)")
                                     Text(product.name)
+                                        .font(.system(size: 15))
                                         .fontWeight(.semibold)
+                                    
                                 }
+                                .frame(width: 190, alignment: .leading)
                                 .font(.caption2)
                                 
-                                Spacer()
-                                HStack{
-                                    Text("Precio Venta: $")
-                                    Text("\(product.currentPrice, specifier: "%.0f")")
+                                HStack(alignment: .lastTextBaseline){
+                                    Text("Precio Venta: $ \(product.currentPrice, specifier: "%.0f")")
                                 }
                                 .font(.system(size: 15, design: .rounded))
                                 .fontWeight(.medium)
@@ -53,4 +54,5 @@ struct PriceView: View {
 
 #Preview {
     PriceView()
+        .modelContainer(previewContainer)
 }

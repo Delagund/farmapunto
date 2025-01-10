@@ -15,15 +15,17 @@ struct InventoryList: View {
                 List {
                     ForEach(products, id: \.code) { product in
                         NavigationLink(value: product) {
-                            HStack(alignment: .center) {
+                            HStack(spacing: 5) {
                                 VStack(alignment: .leading){
                                     Text("SKU: \(product.code)")
                                     Text(product.name)
+                                        .font(.system(size: 15))
                                         .fontWeight(.semibold)
                                 }
+                                .frame(width: 190, alignment: .leading)
                                 .font(.caption2)
                                 
-                                HStack{
+                                HStack(alignment: .lastTextBaseline){
                                     Spacer()
                                     LabeledContent("Stock Actual:", value: "\(product.stockQuantity) un.")
                                 }
@@ -52,4 +54,5 @@ struct InventoryList: View {
 
 #Preview {
     InventoryList()
+        .modelContainer(previewContainer)
 }

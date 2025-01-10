@@ -64,5 +64,5 @@ struct InventoryDetailView: View {
 
 #Preview {
     InventoryDetailView(product: testProduct1)
-        .modelContainer(for: Product.self, inMemory: true)
+        .modelContainer(previewContainer)
 }

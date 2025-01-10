@@ -34,8 +34,8 @@ struct NewPriceView: View {
                     HStack(spacing: 15) {
                         DatePicker("Fecha", selection: $date, in: .now...)
                             .keyboardType(.numberPad)
-                            .foregroundColor(.secondary)
                     }
+                    
                     HStack(spacing: 15) {
                         Text("Precio Costo:")
                         TextField("Valor", value: $netPrice, format: .number)
