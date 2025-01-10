@@ -2,18 +2,18 @@
 import Foundation
 
 let testProduct1 = Product(code: "7800060005723",
-                           name: "AB antiséptico x 12 comprimidos",
+                           name: "AB ANTISEPTICO x 12 COMP",
                            genericName: "CLORHEXIDINA",
                            dosisQty: 12.0,
                            dosageForm: .comprimidos,
-                           laboratoryName: "Saval"
+                           laboratoryName: "SAVAL"
                     )
 
 let inventoryTest1 = Inventory(product: testProduct1, quantity: 345)
 
 let inventoryMoves1 = InventoryMovement(quantity: 11, type: .salida, reason: "venta", date: .now)
 
-let transactionTest1 = Price(netPrice: 1200, taxFee: 19, revenue: 20, storedFinalPrice: 2500, product: testProduct1)
+let transactionTest1 = Price(netPrice: 1200, taxFee: 19, revenue: 20, storedFinalPrice: 2500)
 
 let testProduct2 = Product(code: "78123000234",
                            name: "CLORFENAMINA 4MG X 20 COMP",
@@ -30,6 +30,74 @@ let transactionTest2 = Price(netPrice: 180, taxFee: 19, revenue: 20, storedFinal
 let myTestProducts = [testProduct1, testProduct2]
 let myInventoriesTest = [inventoryTest1, inventoryTest2]
  
+struct SampleProducts {
+    static var contents: [Product] = [
+        Product(code: "7800060005723",
+                name: "AB ANTISEPTICO x 12 COMP",
+                genericName: "CLORHEXIDINA",
+                dosisQty: 12.0,
+                dosageForm: .comprimidos,
+                laboratoryName: "SAVAL",
+                currentPrice: 190.0,
+                stockQuantity: 12,
+                createdAt: .now,
+                updateAt: Date(timeIntervalSinceNow: 12000),
+                inventory: [
+                    Inventory(quantity: 12, movements: [
+                        InventoryMovement(quantity: 5, type: .salida, reason: "venta", date: Date(timeIntervalSinceNow: 86400)),
+                        InventoryMovement(quantity:17, type: .entrada, reason: "Compra", date: .now)
+                    ])
+                ],
+                price: [
+                    Price(netPrice: 1600, taxFee: 19, revenue: 50, date: .now, storedFinalPrice: 2490)
+                ]
+               ),
+        Product(code: "7834006780515",
+                name: "PARACETAMOL 500MG X 16 COMP",
+                genericName: "PARACETAMOL",
+                dosisQty: 16.0,
+                dosageForm: .comprimidos,
+                laboratoryName: "LAB. CHILE",
+                currentPrice: 990,
+                stockQuantity: 23,
+                createdAt: .now,
+                updateAt: Date(timeIntervalSinceNow: 432000),
+                inventory: [
+                    Inventory(quantity: 23, movements: [
+                        InventoryMovement(quantity: 13, type: .entrada, reason: "COMPRA", date: .now)
+                    ])
+                ],
+                price: [
+                    Price(netPrice: 189, taxFee: 19, revenue: 80, date: .now, storedFinalPrice: 990)
+                    ]
+               ),
+        Product(code: "2301759204987",
+                name: "PYRIPED SUSP X 100 ML",
+                genericName: "IBUPROFENO",
+                dosisQty: 120,
+                dosageForm: .suspension,
+                laboratoryName: "PRATER",
+                currentPrice: 2500,
+                stockQuantity: 11,
+                createdAt: .now,
+                updateAt: Date(timeIntervalSinceNow: 86400),
+                inventory: [
+                    Inventory(quantity: 6, movements: [
+                        InventoryMovement(quantity: 10, type: .entrada, reason: "COMPRA", date: .now)
+                    ])
+                ],
+                price: [
+                    Price(netPrice: 1290, taxFee: 19, revenue: 40, date: .now, storedFinalPrice: 2500)
+                ]
+               )
+    ]
+}
+
+
+
+
+
+
 //MARK: funcion para borrar en cascada un producto y todos sus datos en otras tablas.
 
 /*

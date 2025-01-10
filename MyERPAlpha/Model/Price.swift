@@ -12,7 +12,7 @@ class Price {
     
     @Relationship(inverse: \Product.price) var product: Product?
     
-    init(netPrice: Double = 0.0, taxFee: Double = 19, revenue: Double = 20 ,date: Date = Date(), storedFinalPrice: Double = 0.0, product: Product) {
+    init(netPrice: Double = 0.0, taxFee: Double = 19, revenue: Double = 20 ,date: Date = Date(), storedFinalPrice: Double = 0.0, product: Product? = nil) {
         self.netPrice = max(0.0, netPrice) // Asegura que no sea negativo
         self.taxFee = max(0.0, taxFee)
         self.revenue = max(0.0, revenue)

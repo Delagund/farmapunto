@@ -65,5 +65,5 @@ struct MainMenuApp: View {
 
 #Preview {
     MainMenuApp()
-        .modelContainer(for: [Product.self, Inventory.self, Price.self], inMemory: true)
+        .modelContainer(previewContainer)
 }
