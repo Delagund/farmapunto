@@ -47,7 +47,7 @@ struct ProductList: View {
                         }
                     }
                 } message: {
-                    Text("¿Seguro quier eliminar este producto? Esta acción NO se puede deshacer")
+                    Text("¿Seguro quiere eliminar este producto? Esta acción NO se puede deshacer")
                 }
             }
         }
