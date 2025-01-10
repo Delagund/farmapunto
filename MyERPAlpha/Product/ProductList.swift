@@ -6,6 +6,9 @@ struct ProductList: View {
     @Environment(\.modelContext) private var context
     @Query var products: [Product]
     
+    @State private var showDeleteAlert = false
+    @State private var selectedOffsets: IndexSet?
+    
     var body: some View {
         Group{
             if products.isEmpty {
@@ -28,7 +31,23 @@ struct ProductList: View {
                             }
                         }
                     }
-                    .onDelete(perform: deleteItems)
+                    .onDelete{
+                        offsets in
+                        selectedOffsets = offsets
+                        showDeleteAlert = true
+                    }
+                }
+                .alert("Confirmar eliminación", isPresented: $showDeleteAlert) {
+                    Button("Cancelar", role: .cancel) {
+                        // No se realiza ninguna acción
+                    }
+                    Button("Eliminar", role: .destructive) {
+                        if let offsets = selectedOffsets {
+                            deleteItems(at: offsets)
+                        }
+                    }
+                } message: {
+                    Text("¿Seguro quier eliminar este producto? Esta acción NO se puede deshacer")
                 }
             }
         }
@@ -45,7 +64,7 @@ struct ProductList: View {
             }
         }, sort: sortOrder)
     }
-//TODO: revisar este método para poder borrar correctamente unn porducto y sus relaciones
+
     private func deleteItems(at offsets: IndexSet) {
         withAnimation {
             for offset in offsets {
@@ -59,5 +78,6 @@ struct ProductList: View {
 
 #Preview {
     ProductList()
+        .modelContainer(previewContainer)
         
 }

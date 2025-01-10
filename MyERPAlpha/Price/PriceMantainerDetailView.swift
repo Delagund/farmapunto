@@ -3,7 +3,7 @@ import SwiftData
 
 //Vista del mantenedor de precios.
 struct PriceMantainerDetailView: View {
-    @Bindable var product: Product
+    let product: Product
     @State private var showPriceSheet = false
     
     @State private var netPrice: Double = 0.0

@@ -55,5 +55,5 @@ struct ProductListView: View {
 #Preview {
     @Previewable @State var path = NavigationPath()
     ProductListView(path: $path)
-        .modelContainer(for: Product.self, inMemory: true)
+        .modelContainer(previewContainer)
 }
