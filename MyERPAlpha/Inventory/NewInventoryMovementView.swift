@@ -35,7 +35,6 @@ struct NewInventoryMovementView: View {
                             .keyboardType(.numberPad)
                             .foregroundColor(.secondary)
                     }
-    
                 }
                 
                 Section("Motivo del Movimiento") {

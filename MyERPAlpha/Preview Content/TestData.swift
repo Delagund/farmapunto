@@ -53,7 +53,7 @@ struct SampleProducts {
                 dosisQty: 12.0,
                 dosageForm: .comprimidos,
                 laboratoryName: "SAVAL",
-                currentPrice: 190.0,
+                currentPrice: 2490,
                 stockQuantity: 12,
                 createdAt: .now,
                 updateAt: Date(timeIntervalSinceNow: 12000),
@@ -92,7 +92,7 @@ struct SampleProducts {
                 dosisQty: 120,
                 dosageForm: .suspension,
                 laboratoryName: "PRATER",
-                currentPrice: 2500,
+                currentPrice: 4990,
                 stockQuantity: 11,
                 createdAt: .now,
                 updateAt: Date(timeIntervalSinceNow: 86400),
@@ -102,34 +102,14 @@ struct SampleProducts {
                     ])
                 ],
                 price: [
-                    Price(netPrice: 1290, taxFee: 19, revenue: 40, date: .now, storedFinalPrice: 2500)
+                    Price(netPrice: 1290, taxFee: 19, revenue: 40, date: .now, storedFinalPrice: 4990)
                 ]
                )
     ]
 }
 
 
-
-
-
-
-//MARK: funcion para borrar en cascada un producto y todos sus datos en otras tablas.
-
 /*
-func deleteProduct(_ product: Product, context: ModelContext) throws {
-    // Eliminar inventario relacionado
-    if let inventory = product.inventory {
-        context.delete(inventory)
-    }
-    
-    // Eliminar movimientos relacionados
-    for movement in product.movements {
-        context.delete(movement)
-    }
-    
-    // Finalmente, eliminar el producto
-    context.delete(product)
-}
  
  
  Text(String(format: "%.2f €", producto.precio))
