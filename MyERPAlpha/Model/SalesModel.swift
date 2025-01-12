@@ -3,11 +3,11 @@
 import SwiftUI
 
 class SalesModel: ObservableObject {
-    @Published var saleAmounts: [Int: Int] = [:] // Diccionario para almacenar la cantidad de cada producto según su índice
+    @Published var saleAmounts: [String: Int] = [:] // Diccionario para almacenar la cantidad de cada producto según su índice
     
     func subtotal(for product: Product, at index: Int) -> Double {
-        let quantity = saleAmounts[index] ?? 1
-        return Double(quantity) * product.currentPrice
+            let quantity = saleAmounts[product.code] ?? 1
+            return (product.currentPrice * Double(quantity))
     }
     
     func total(for products: [Product]) -> Double {
@@ -21,3 +21,4 @@ class SalesModel: ObservableObject {
     }
 }
 
+ 

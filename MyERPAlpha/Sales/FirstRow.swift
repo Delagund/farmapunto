@@ -5,7 +5,7 @@ import SwiftUI
 
 struct FirstRow: View {
     @ObservedObject var salesModel: SalesModel  //para manejar los cálculos de la vista
-    let selectedProducts: Product
+    let selectedProduct: Product
     let indexNumber: Int
     
     var body: some View {
@@ -13,7 +13,7 @@ struct FirstRow: View {
          GridRow {
             
             // Producto
-            Text(selectedProducts.name)
+            Text(selectedProduct.name)
                 .lineLimit(2)
                 .minimumScaleFactor(0.2)
                 .multilineTextAlignment(.leading)
@@ -21,13 +21,14 @@ struct FirstRow: View {
                 .frame(width: 140, alignment: .leading)
             
             // Precio unitario
-            Text("$\(String(format: "%.0f", selectedProducts.currentPrice))")
+            Text("$\(String(format: "%.0f", selectedProduct.currentPrice))")
                 .frame(width: 90)
             
             // Cantidad
-             Stepper("\(salesModel.saleAmounts[indexNumber] ?? 1)", value: Binding(
-                get: { salesModel.saleAmounts[indexNumber] ?? 1 },
-                set: { salesModel.saleAmounts[indexNumber] = $0 }
+             Stepper("\(salesModel.saleAmounts[selectedProduct.code] ?? 1)", value: Binding(
+                get: { salesModel.saleAmounts[selectedProduct.code] ?? 1 },
+                set: { newValue in
+                    salesModel.saleAmounts[selectedProduct.code] = newValue }
              ), in: 1...99)
                 .bold()
                 .frame(width: 140)
@@ -40,5 +41,5 @@ struct FirstRow: View {
     @Previewable @State var products = SampleProducts.contents
     @Previewable @State var index = 0
     @Previewable var salesModel = SalesModel()
-    FirstRow(salesModel: salesModel, selectedProducts: products[0] , indexNumber: index)
+    FirstRow(salesModel: salesModel, selectedProduct: products[0] , indexNumber: index)
 }

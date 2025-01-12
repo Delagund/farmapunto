@@ -42,10 +42,14 @@ struct PointOfSaleView: View {
                     ForEach($selectedProducts.indices, id: \.self) { index in
                         Grid(horizontalSpacing: 5) {
                             // Primera fila: Producto, Cantidad y Precio
-                            FirstRow(salesModel: salesModel, selectedProducts: selectedProducts[index], indexNumber: index)
+                            FirstRow(salesModel: salesModel,
+                                     selectedProduct: selectedProducts[index],
+                                     indexNumber: index
+                            )
                             
                             // Segunda fila: SKU, subtotal, boton eliminar
-                            SecondRow(salesModel: salesModel, products: $selectedProducts, selectedProduct: selectedProducts[index], indexNumber: index)
+                            SecondRow(salesModel: salesModel, selectedProducts: $selectedProducts, selectedProduct: selectedProducts[index], indexNumber: index
+                            )
 
                             // Tercera fila: linea division entre productos.
                             GridRow {
@@ -59,12 +63,13 @@ struct PointOfSaleView: View {
                     Text("Agregue un producto")
                 }
                 //Vista de Totales, items, IVA, efectivo, vuelto
-                TotalsView(selectedProducts: $selectedProducts, cashMoney: $cashMoney)
+                TotalsView(salesModel: salesModel, selectedProducts: $selectedProducts, cashMoney: $cashMoney)
                 
                 // Botones de cancelacion o cierre de venta
                 HStack {
                     // Botón "Cancelar"
                     Button(action: {
+                        cashMoney = 0
                         salesModel.resetSaleAmounts()
                         selectedProducts = []
                     }) {
@@ -79,7 +84,7 @@ struct PointOfSaleView: View {
                     
                     // Botón "Terminar Venta"
                     Button(action: {
-                        //TODO: implmentar logica
+                        completeSale()
                     }) {
                         Text("Terminar Venta")
                             .padding()
@@ -95,22 +100,25 @@ struct PointOfSaleView: View {
     }
     
     private func completeSale() {
-        for index in products.indices {
-            let product = products[index]
-            let saleAmount = salesModel.saleAmounts[index]
+        for index in selectedProducts.indices {
+            let product = selectedProducts[index]
+            let saleAmount = salesModel.saleAmounts[product.code]
             
-//            // Actualizar el stock del producto
-//            products[index].stock -= saleAmount
+            guard saleAmount != nil else {return}
             
             // Crear el registro de movimiento de inventario
             let movement = InventoryMovement(
                 quantity: saleAmount!,
                 type: .salida,
-                reason: "Venta de producto",
+                reason: "Venta Nº XXXX - Fecha \(Date().formatted(date: .complete, time: .shortened))",
                 date: Date()
             )
             
-            // Aquí puedes guardar `movement` en la base de datos o manejarlo según sea necesario
+            // guarda `movement` en la base de datos
+            context.insert(movement)
+            try? context.save()
+            
+            
             print("Movimiento registrado: \(movement)")
         }
         

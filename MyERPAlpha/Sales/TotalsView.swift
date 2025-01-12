@@ -5,23 +5,30 @@ import SwiftUI
 struct TotalsView: View {
     @ObservedObject var salesModel: SalesModel
     @Binding var selectedProducts: [Product]
-    @Binding var cashMoney: Double
-    var quantity: Double = 1.0
     
+    @Binding var cashMoney: Double
+   
     var subtotal: Double {
-        selectedProducts.reduce(0) {$0 + ($1.currentPrice * quantity) - ($1.currentPrice * quantity * 0.19)}
+        selectedProducts.reduce(0) { total, product in
+            let quantity = salesModel.saleAmounts[product.code] ?? 1
+            return total + (product.currentPrice * Double(quantity))
+        } * 0.81
     }
     
     var fee: Double {
-        selectedProducts.reduce(0) {$0 + (($1.currentPrice * quantity * 0.19))} // 19% de impuesto
+        selectedProducts.reduce(0) { total, product in
+            let quantity = salesModel.saleAmounts[product.code] ?? 1
+            return total + (product.currentPrice * Double(quantity))
+        } * 0.19 // 19% de impuesto
     }
     
     var total: Double {
-        selectedProducts.reduce(0) { $0 + ($1.currentPrice * quantity) }
+        subtotal + fee
     }
     
     var itemsQty: Int {
-        selectedProducts.reduce(0) { $0 + $1.quantity }
+        // selectedProducts.reduce(0) { $0 + $1.quantity }
+        salesModel.saleAmounts.values.reduce(0, +) // Suma todas las cantidades elegidas
     }
     
     var vuelto: Double {
@@ -72,7 +79,8 @@ struct TotalsView: View {
 }
 
 #Preview {
+    @Previewable var salesModel = SalesModel()
     @Previewable @State var productsTest = SampleProducts.contents
     @Previewable @State var cash = 10000.0
-    TotalsView(selectedProducts: $productsTest, cashMoney: $cash)
+    TotalsView(salesModel: salesModel, selectedProducts: $productsTest, cashMoney: $cash)
 }

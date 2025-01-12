@@ -4,7 +4,7 @@ import SwiftUI
 
 struct SecondRow: View {
     @ObservedObject var salesModel: SalesModel //manejo de lógica de venta
-    @Binding var products: [Product]
+    @Binding var selectedProducts: [Product]
     let selectedProduct: Product
     let indexNumber: Int
    
@@ -26,8 +26,8 @@ struct SecondRow: View {
                 
                 // Botón de eliminación que usa datos de logica de venta
                 Button(action: {
-                    salesModel.saleAmounts[indexNumber] = nil // Eliminar la cantidad para este índice
-                    products.remove(at: indexNumber)
+                    salesModel.saleAmounts[selectedProduct.code] = nil // Eliminar la cantidad para este índice
+                    selectedProducts.remove(at: indexNumber)
                     print("Eliminado producto en índice \(indexNumber)")
                 }) {
                     Image(systemName: "trash")
@@ -44,5 +44,5 @@ struct SecondRow: View {
     @Previewable @State var products = SampleProducts.contents
     @Previewable @State var index = 0
     @Previewable var salesModel = SalesModel()
-    SecondRow(salesModel: salesModel, products: $products, selectedProduct: products[0] , indexNumber: index)
+    SecondRow(salesModel: salesModel, selectedProducts: $products, selectedProduct: products[0] , indexNumber: index)
 }
