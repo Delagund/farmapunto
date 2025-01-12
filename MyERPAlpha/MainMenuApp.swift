@@ -52,6 +52,8 @@ struct MainMenuApp: View {
                                 InventoryListView()
                             case "Mantenedor Precios":
                                 PriceListView()
+                            case "Venta":
+                                PointOfSaleView()
                             default:
                                 Text("Vista no encontrada")
                         }

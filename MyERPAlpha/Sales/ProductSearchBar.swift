@@ -54,8 +54,8 @@ struct ProductSearchBar: View {
     private var filteredResults: [Product] {
         guard !searchQuery.isEmpty else { return [] }
         return products.filter { product in
-            product.name.localizedCaseInsensitiveContains(searchQuery) ||
-            product.code.localizedCaseInsensitiveContains(searchQuery)
+           ( product.name.localizedCaseInsensitiveContains(searchQuery) ||
+             product.code.localizedCaseInsensitiveContains(searchQuery)) && product.stockQuantity > 0
         }
     }
     

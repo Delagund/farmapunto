@@ -104,6 +104,23 @@ struct SampleProducts {
                 price: [
                     Price(netPrice: 1290, taxFee: 19, revenue: 40, date: .now, storedFinalPrice: 4990)
                 ]
+               ),
+        Product(code: "7841223231459",
+                name: "CLORANFENICOL SOL. OFTAL. X 10 ML",
+                genericName: "CLORANFENICOL",
+                dosisQty: 10,
+                dosageForm: .colirio,
+                laboratoryName: "SAVAL",
+                currentPrice: 5000,
+                stockQuantity: 0,
+                createdAt: .now,
+                updateAt: Date(timeIntervalSinceNow: 36000),
+                inventory: [
+                    Inventory(quantity: 0, movements: [])
+                ],
+                price: [
+                    Price(netPrice: 2500, taxFee: 19, revenue: 20, date: .now, storedFinalPrice: 5000)
+                ]
                )
     ]
 }

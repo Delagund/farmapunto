@@ -104,22 +104,25 @@ struct PointOfSaleView: View {
             let product = selectedProducts[index]
             let saleAmount = salesModel.saleAmounts[product.code]
             
-            guard saleAmount != nil else {return}
+            guard saleAmount != nil else { print("cantidad invalidad")
+                return}
             
-            // Crear el registro de movimiento de inventario
+        // Crear el registro de movimiento de inventario
             let movement = InventoryMovement(
-                quantity: saleAmount!,
+                quantity: saleAmount ?? 0,
                 type: .salida,
-                reason: "Venta Nº XXXX - Fecha \(Date().formatted(date: .complete, time: .shortened))",
+                reason: "Venta Nº XXXX", //TODO: ajustar a numero de venta de la cabecera.
                 date: Date()
             )
             
+            // Actualizar la cantidad en stock
+            product.stockQuantity -= movement.quantity
+            
             // guarda `movement` en la base de datos
-            context.insert(movement)
+            product.movements.append(movement)
             try? context.save()
             
-            
-            print("Movimiento registrado: \(movement)")
+            print("Movimiento registrado: \(movement.id) para \(product)")
         }
         
         // Limpiar las cantidades en venta

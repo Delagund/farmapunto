@@ -15,7 +15,5 @@ class Inventory {
         self.quantity = quantity
         self.movements = movements
     }
-    
-    
 }
 
