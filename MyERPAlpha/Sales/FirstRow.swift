@@ -4,9 +4,9 @@ import SwiftUI
 
 
 struct FirstRow: View {
+    @ObservedObject var salesModel: SalesModel  //para manejar los cálculos de la vista
     let selectedProducts: Product
     let indexNumber: Int
-    @State var saleAmount: Int
     
     var body: some View {
         
@@ -25,7 +25,10 @@ struct FirstRow: View {
                 .frame(width: 90)
             
             // Cantidad
-            Stepper("\(saleAmount)", value: $saleAmount, in: 1...99)
+             Stepper("\(salesModel.saleAmounts[indexNumber] ?? 1)", value: Binding(
+                get: { salesModel.saleAmounts[indexNumber] ?? 1 },
+                set: { salesModel.saleAmounts[indexNumber] = $0 }
+             ), in: 1...99)
                 .bold()
                 .frame(width: 140)
         }
@@ -36,6 +39,6 @@ struct FirstRow: View {
 #Preview {
     @Previewable @State var products = SampleProducts.contents
     @Previewable @State var index = 0
-    @Previewable @State var amount = 2
-    FirstRow(selectedProducts: products[0] , indexNumber: index, saleAmount: amount)
+    @Previewable var salesModel = SalesModel()
+    FirstRow(salesModel: salesModel, selectedProducts: products[0] , indexNumber: index)
 }

@@ -3,6 +3,7 @@
 import SwiftUI
 
 struct TotalsView: View {
+    @ObservedObject var salesModel: SalesModel
     @Binding var selectedProducts: [Product]
     @Binding var cashMoney: Double
     var quantity: Double = 1.0
@@ -19,10 +20,9 @@ struct TotalsView: View {
         selectedProducts.reduce(0) { $0 + ($1.currentPrice * quantity) }
     }
     
-//    var itemsQty: Int {
-//        selectedProducts.reduce(0) { $0 + $1.quantity }
-//    }
-    var itemsQty = 1
+    var itemsQty: Int {
+        selectedProducts.reduce(0) { $0 + $1.quantity }
+    }
     
     var vuelto: Double {
         let result = cashMoney - total

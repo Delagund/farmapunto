@@ -3,30 +3,32 @@
 import SwiftUI
 
 struct SecondRow: View {
-    @Binding var product: [Product]
-    let selectedProducts: Product
+    @ObservedObject var salesModel: SalesModel //manejo de lógica de venta
+    @Binding var products: [Product]
+    let selectedProduct: Product
     let indexNumber: Int
-    @Binding var saleAmount: Int
+   
     
     var body: some View {
         GridRow {
             // SKU
-            Text("SKU: \(selectedProducts.code)")
+            Text("SKU: \(selectedProduct.code)")
                 .font(.system(size: 14, design: .rounded))
                 .foregroundStyle(.secondary)
                 .lineLimit(2)
             
-            //Subtotal
+            //Subtotal - usando la lógica centralizada.
             HStack(spacing: 15) {
                 Text("Subtotal:")
                     .foregroundStyle(.secondary)
                     .font(.system(size: 16, design: .rounded))
-                Text("$\(String(format: "%.0f", selectedProducts.currentPrice * Double(saleAmount)))")
+                Text("$\(String(format: "%.0f", salesModel.subtotal(for: selectedProduct, at: indexNumber)))")
                 
-                // Botón de eliminación
+                // Botón de eliminación que usa datos de logica de venta
                 Button(action: {
-                    product.remove(at: indexNumber)
-                    print(indexNumber)
+                    salesModel.saleAmounts[indexNumber] = nil // Eliminar la cantidad para este índice
+                    products.remove(at: indexNumber)
+                    print("Eliminado producto en índice \(indexNumber)")
                 }) {
                     Image(systemName: "trash")
                         .foregroundColor(.red)
@@ -41,6 +43,6 @@ struct SecondRow: View {
 #Preview {
     @Previewable @State var products = SampleProducts.contents
     @Previewable @State var index = 0
-    @Previewable @State var amount = 2
-    SecondRow(product: $products, selectedProducts: products[0] , indexNumber: index, saleAmount: $amount)
+    @Previewable var salesModel = SalesModel()
+    SecondRow(salesModel: salesModel, products: $products, selectedProduct: products[0] , indexNumber: index)
 }
