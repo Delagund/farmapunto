@@ -55,6 +55,7 @@ struct MainMenuApp: View {
                         }
                     }
                 }
+                .padding(.horizontal)
                 Spacer()
             }
         }

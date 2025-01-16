@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct MyERPAlphaApp: App {
+    /// Esquema para almacenamiento de datos
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Product.self,
@@ -33,7 +34,7 @@ struct MyERPAlphaApp: App {
         }
         .modelContainer(sharedModelContainer)
     }
-    
+    /// Dirección de arhcivo de base de datos.
     init() {
         print(URL.applicationSupportDirectory.path(percentEncoded: false))
     }

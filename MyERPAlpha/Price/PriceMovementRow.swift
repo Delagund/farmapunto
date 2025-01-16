@@ -5,19 +5,10 @@ import SwiftUI
 struct PriceMovementRow: View {
     let price: Price
     
-    // MARK: - Date Formatter
-    static let localizedDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long // Formato local para la fecha
-        formatter.timeStyle = .short // Formato local para la hora
-        formatter.locale = Locale.current // Usa el idioma y región del dispositivo
-        return formatter
-    }()
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             VStack(alignment: .leading) {
-                Text("Fecha: \(Self.localizedDateFormatter.string(from: price.date))")
+                Text("Fecha: \(Date().formatted(date: .abbreviated, time: .shortened))")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 VStack(alignment: .leading) {
