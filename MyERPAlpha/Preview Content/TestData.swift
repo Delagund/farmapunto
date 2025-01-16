@@ -112,7 +112,7 @@ struct SampleProducts {
                 dosageForm: .colirio,
                 laboratoryName: "SAVAL",
                 currentPrice: 5000,
-                stockQuantity: 0,
+                stockQuantity: 1,
                 createdAt: .now,
                 updateAt: Date(timeIntervalSinceNow: 36000),
                 inventory: [

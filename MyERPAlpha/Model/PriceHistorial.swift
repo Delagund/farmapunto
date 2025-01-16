@@ -5,6 +5,8 @@
 //  Created by Cristián Ortiz on 08-01-25.
 //
 
+//TODO: Revisar si corresponde sacar de la aplicacion o cambiar para crear otro modelo o lógica.
+
 import Foundation
 import SwiftData
 

@@ -3,9 +3,7 @@ import SwiftUI
 import SwiftData
 
 struct ProductSearchBar: View {
-    @Environment(\.modelContext) var context
-   // @Query var products: [Product] // Productos disponibles para buscar
-    var products: [Product] //TODO: Cambiar por variable de arriba para usar la app.
+    let products: [Product] // Productos disponibles para buscar
     @Binding var selectedProducts: [Product] // Productos seleccionados
     
     @State private var searchQuery: String = ""
@@ -50,7 +48,7 @@ struct ProductSearchBar: View {
         }
     }
     
-    // Productos filtrados por nombre o código
+    /// Productos filtrados por nombre o código
     private var filteredResults: [Product] {
         guard !searchQuery.isEmpty else { return [] }
         return products.filter { product in
@@ -59,7 +57,7 @@ struct ProductSearchBar: View {
         }
     }
     
-    // Agregar un producto a la selección
+    /// Agregar un producto a la selección
     private func addProductToSelection(_ product: Product) {
         if !selectedProducts.contains(where: { $0.id == product.id }) {
             selectedProducts.append(product)

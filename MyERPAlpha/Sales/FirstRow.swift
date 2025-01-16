@@ -29,7 +29,7 @@ struct FirstRow: View {
                 get: { salesModel.saleAmounts[selectedProduct.code] ?? 1 },
                 set: { newValue in
                     salesModel.saleAmounts[selectedProduct.code] = newValue }
-             ), in: 1...99)
+             ), in: selectedProduct.stockQuantity <= 0 ? 1...99 : 1...selectedProduct.stockQuantity)
                 .bold()
                 .frame(width: 140)
         }

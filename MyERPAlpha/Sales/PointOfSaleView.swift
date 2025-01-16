@@ -3,10 +3,9 @@ import SwiftData
 
 struct PointOfSaleView: View {
     @Environment(\.modelContext) private var context
-    @Query var products: [Product]
-    @State var saleNumber = 1 //TODO: Falta persistir este dato.
+    @Query private var products: [Product]
+    @State private var saleNumber = 1 //TODO: Falta persistir este dato.
     @State private var selectedProducts: [Product] = [] // Productos seleccionados para la venta
-    
     @State private var salesModel = SalesModel()
     @State private var cashMoney: Double = 0.0
     
@@ -48,7 +47,10 @@ struct PointOfSaleView: View {
                             )
                             
                             // Segunda fila: SKU, subtotal, boton eliminar
-                            SecondRow(salesModel: salesModel, selectedProducts: $selectedProducts, selectedProduct: selectedProducts[index], indexNumber: index
+                            SecondRow(salesModel: salesModel,
+                                      selectedProducts: $selectedProducts,
+                                      selectedProduct: selectedProducts[index],
+                                      indexNumber: index
                             )
 
                             // Tercera fila: linea division entre productos.
@@ -63,76 +65,16 @@ struct PointOfSaleView: View {
                     Text("Agregue un producto")
                 }
                 //Vista de Totales, items, IVA, efectivo, vuelto
-                TotalsView(salesModel: salesModel, selectedProducts: $selectedProducts, cashMoney: $cashMoney)
+                TotalsView(salesModel: salesModel,
+                           selectedProducts: $selectedProducts,
+                           cashMoney: $cashMoney)
                 
-                // Botones de cancelacion o cierre de venta
-                HStack {
-                    // Botón "Cancelar"
-                    Button(action: {
-                        cashMoney = 0
-                        salesModel.resetSaleAmounts()
-                        selectedProducts = []
-                    }) {
-                        Text("Cancelar")
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.red)
-                            .foregroundColor(.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    }
-                    .frame(maxWidth: 150) // Tamaño más pequeño
-                    
-                    // Botón "Terminar Venta"
-                    Button(action: {
-                        completeSale()
-                    }) {
-                        Text("Terminar Venta")
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(.black)
-                            .foregroundColor(.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    }
-                }
-                .padding(.horizontal)
+                EndingSale(selectedProducts: $selectedProducts,
+                           salesModel: $salesModel,
+                           cashMoney: $cashMoney,
+                           saleNumber: $saleNumber)
             }
         }
-    }
-    
-    private func completeSale() {
-        for index in selectedProducts.indices {
-            let product = selectedProducts[index]
-            let saleAmount = salesModel.saleAmounts[product.code]
-            
-            guard saleAmount != nil else { print("cantidad invalidad")
-                return}
-            
-        // Crear el registro de movimiento de inventario
-            let movement = InventoryMovement(
-                quantity: saleAmount ?? 0,
-                type: .salida,
-                reason: "Venta Nº \(saleNumber)",
-                date: Date()
-            )
-            
-            // Actualizar la cantidad en stock
-            product.stockQuantity -= movement.quantity
-            
-            // guarda `movement` en la base de datos
-            product.movements.append(movement)
-            try? context.save()
-            
-            print("Movimiento registrado: \(movement.id) para \(product)")
-        }
-        
-        // Limpiar las cantidades en venta
-        salesModel.resetSaleAmounts()
-        
-        // Limpiar lista de productos en venta
-        selectedProducts = []
-        
-        // Cambiar número de la venta
-        saleNumber += 1
     }
 }
 
