@@ -30,7 +30,7 @@ struct MainMenuApp: View {
                     .padding()
                 
                 HStack {
-                    LazyVGrid(columns: columns, spacing: 30) {
+                    LazyVGrid(columns: columns, spacing: 35) {
                         ForEach(buttonConfigs, id: \.buttonName) { squareOption in
                             squareButton(iconSystemName: squareOption.iconSystemName,
                                          buttonName: squareOption.buttonName,

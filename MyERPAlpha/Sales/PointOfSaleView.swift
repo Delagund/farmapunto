@@ -4,7 +4,7 @@ import SwiftData
 struct PointOfSaleView: View {
     @Environment(\.modelContext) private var context
     @Query var products: [Product]
-    
+    @State var saleNumber = 1 //TODO: Falta persistir este dato.
     @State private var selectedProducts: [Product] = [] // Productos seleccionados para la venta
     
     @State private var salesModel = SalesModel()
@@ -22,7 +22,7 @@ struct PointOfSaleView: View {
         ScrollView {
             VStack {
                 // Encabezado Punto de Venta
-                HeaderView()
+                HeaderView(saleNumber: $saleNumber)
                 
                 // Barra de búsqueda para agregar productos
                 ProductSearchBar(products: products, selectedProducts: $selectedProducts)
@@ -111,7 +111,7 @@ struct PointOfSaleView: View {
             let movement = InventoryMovement(
                 quantity: saleAmount ?? 0,
                 type: .salida,
-                reason: "Venta Nº XXXX", //TODO: ajustar a numero de venta de la cabecera.
+                reason: "Venta Nº \(saleNumber)",
                 date: Date()
             )
             
@@ -130,6 +130,9 @@ struct PointOfSaleView: View {
         
         // Limpiar lista de productos en venta
         selectedProducts = []
+        
+        // Cambiar número de la venta
+        saleNumber += 1
     }
 }
 

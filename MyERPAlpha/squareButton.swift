@@ -13,7 +13,7 @@ struct squareButton: View {
                 Image(systemName: iconSystemName) //ícono de cada boton principal
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 50, height: 50)
+                    .frame(width: 55, height: 55)
                 Text(buttonName) // nombre en pantalla
                     .bold()
                     .multilineTextAlignment(.center)
@@ -21,11 +21,10 @@ struct squareButton: View {
             }
             .foregroundStyle(buttonColor) //color del texto
             .frame(width: 150, height: 150)
-//            .background(buttonColor.opacity(0.1)) // color del fondo del boton
-            .cornerRadius(20)
+            //.background(buttonColor.opacity(0.1)) // color del fondo del boton
             .overlay {
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(lineWidth: 7)
+                    .stroke(lineWidth: 6)
                     .foregroundColor(buttonColor) // color del borde
             }
         }
