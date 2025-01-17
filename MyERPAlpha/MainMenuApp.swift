@@ -3,7 +3,7 @@
 import SwiftUI
 
 struct MainMenuApp: View {
-    
+
     @State private var path = NavigationPath() // Ruta global
     
     /// Datos para conformar los botones
@@ -50,6 +50,8 @@ struct MainMenuApp: View {
                                 PriceListView()
                             case "Venta":
                                 PointOfSaleView()
+                            case "Compras":
+                                PurchasesView()
                             default:
                                 Text("Vista no encontrada")
                         }

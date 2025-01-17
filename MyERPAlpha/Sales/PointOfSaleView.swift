@@ -13,8 +13,7 @@ struct PointOfSaleView: View {
     var columns: [GridItem] = [
         GridItem(.flexible(minimum: 10, maximum: .infinity)),
         GridItem(.flexible(minimum: 10, maximum: .infinity)),
-        GridItem(.flexible(minimum: 10, maximum: .infinity), alignment: .leading)
-        
+        GridItem(.flexible(minimum: 10, maximum: .infinity))
     ]
     
     var body: some View {
@@ -24,7 +23,7 @@ struct PointOfSaleView: View {
                 HeaderView(saleNumber: $saleNumber)
                 
                 // Barra de búsqueda para agregar productos
-                ProductSearchBar(products: products, selectedProducts: $selectedProducts)
+                ProductSearchBar(products: products, selectedProducts: $selectedProducts, salesModel: salesModel)
             
                 Divider()
                 // Encabezados de las columnas
@@ -35,7 +34,12 @@ struct PointOfSaleView: View {
                     Text("Cantidad").bold()
                 }
                 .frame(maxWidth: .infinity)
-                
+                .background {
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(.background
+                            .shadow(.drop(color: .black.opacity(0.1), radius: 5, x: 5, y: 5)))
+                }
+               
                 // Filas dinámicas
                 if !selectedProducts.isEmpty {
                     ForEach($selectedProducts.indices, id: \.self) { index in
@@ -50,29 +54,36 @@ struct PointOfSaleView: View {
                             SecondRow(salesModel: salesModel,
                                       selectedProducts: $selectedProducts,
                                       selectedProduct: selectedProducts[index],
-                                      indexNumber: index
-                            )
+                                      indexNumber: index)
 
-                            // Tercera fila: linea division entre productos.
-                            GridRow {
-                                Divider()
-                                    .gridCellColumns(3)
-                            }
                         }
-                        .padding(.horizontal)
+                        .padding()
+                        .background {
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(.background
+                                    .shadow(.drop(color: .black.opacity(0.1), radius: 5, x: 5, y: 5)))
+                        }
                     }
                 } else {
                     Text("Agregue un producto")
                 }
+                
                 //Vista de Totales, items, IVA, efectivo, vuelto
                 TotalsView(salesModel: salesModel,
                            selectedProducts: $selectedProducts,
                            cashMoney: $cashMoney)
+                .background {
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(.background
+                            .shadow(.drop(color: .black.opacity(0.1), radius: 5, x: 5, y: 5)))
+                }
                 
+                //Botones de cancelar y Terminar Venta
                 EndingSale(selectedProducts: $selectedProducts,
-                           salesModel: $salesModel,
+                           salesModel: salesModel,
                            cashMoney: $cashMoney,
                            saleNumber: $saleNumber)
+                .padding(.top)
             }
         }
     }

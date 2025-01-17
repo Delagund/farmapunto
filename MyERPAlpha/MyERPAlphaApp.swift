@@ -34,8 +34,9 @@ struct MyERPAlphaApp: App {
         }
         .modelContainer(sharedModelContainer)
     }
-    /// Dirección de arhcivo de base de datos.
+    
     init() {
         print(URL.applicationSupportDirectory.path(percentEncoded: false))
     }
+
 }

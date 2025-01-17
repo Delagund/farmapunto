@@ -5,7 +5,7 @@ import SwiftData
 struct ProductSearchBar: View {
     let products: [Product] // Productos disponibles para buscar
     @Binding var selectedProducts: [Product] // Productos seleccionados
-    
+    @ObservedObject var salesModel: SalesModel
     @State private var searchQuery: String = ""
     @State private var isDropdownVisible: Bool = false
     
@@ -14,6 +14,11 @@ struct ProductSearchBar: View {
             // TextField para la búsqueda
             TextField("Buscar por nombre o SKU", text: $searchQuery)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .background {
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(.background
+                            .shadow(.drop(color: .black.opacity(0.1), radius: 5, x: 5, y: 5)))
+                }
                 .padding()
                 .onChange(of: searchQuery, { oldValue, newValue in
                     isDropdownVisible = !searchQuery.isEmpty
@@ -31,6 +36,7 @@ struct ProductSearchBar: View {
                                 .cornerRadius(8)
                                 .onTapGesture {
                                     addProductToSelection(product)
+                                    salesModel.saleAmounts[product.code] = 1
                                 }
                         }
                     }
@@ -69,9 +75,11 @@ struct ProductSearchBar: View {
 
 
 #Preview("Barra de Búsqueda con Datos de Prueba") {
+    @Previewable var salesModel = SalesModel()
     ProductSearchBar(
         products: SampleProducts.contents, // Simulación de consulta
-        selectedProducts: .constant([]) // Lista inicial vacía
+        selectedProducts: .constant([]), // Lista inicial vacía
+        salesModel: salesModel // instancia de salesModel, para agregar cantidad de elementos en venta.
     )
         .modelContainer(previewContainer)
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct EndingSale: View {
     @Environment(\.modelContext) private var context
     @Binding var selectedProducts: [Product] // Productos seleccionados para la venta
-    @Binding var salesModel: SalesModel
+    @ObservedObject var salesModel: SalesModel
     @Binding var cashMoney: Double
     @Binding var saleNumber: Int
     
@@ -31,7 +31,7 @@ struct EndingSale: View {
                     .foregroundColor(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
-            .frame(maxWidth: 150) // Tamaño más pequeño
+            .frame(maxWidth: 120) // Tamaño más pequeño
             
             // Botón "Terminar Venta"
             Button(action: {
@@ -69,7 +69,7 @@ struct EndingSale: View {
             product.movements.append(movement)
             try? context.save()
             
-            print("Movimiento registrado: \(movement.id) para \(product)")
+            print("Movimiento registrado: \(movement.id) para \(product.name)")
         }
         
         // Limpiar las cantidades en venta
@@ -85,9 +85,9 @@ struct EndingSale: View {
 
 #Preview {
     @Previewable @State var products = SampleProducts.contents
-    @Previewable @State var salesModel = SalesModel()
+    @Previewable var salesModel = SalesModel()
     @Previewable @State var cash: Double = 20000
     @Previewable @State var saleNumber: Int = 2
-    EndingSale(selectedProducts: $products, salesModel: $salesModel, cashMoney: $cash, saleNumber: $saleNumber)
+    EndingSale(selectedProducts: $products, salesModel: salesModel, cashMoney: $cash, saleNumber: $saleNumber)
         .modelContainer(previewContainer)
 }
