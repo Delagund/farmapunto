@@ -5,7 +5,6 @@ import SwiftData
 struct ProductList: View {
     @Environment(\.modelContext) private var context
     @Query var products: [Product]
-    
     @State private var showDeleteAlert = false
     @State private var selectedOffsets: IndexSet?
     
@@ -64,7 +63,8 @@ struct ProductList: View {
             }
         }, sort: sortOrder)
     }
-
+    
+    // borrar elementos al deslizar
     private func deleteItems(at offsets: IndexSet) {
         withAnimation {
             for offset in offsets {

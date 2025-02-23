@@ -6,12 +6,12 @@ import SwiftData
 struct PurchasesView: View {
     @Environment(\.modelContext) private var context
     @Query private var products: [Product]
-    @State private var purchasedQty: Int = 1
+    @State private var purchasedQty: Int = 1 // Cantidad para vender
     @State private var selectedProducts: [Product] = [] // Productos seleccionados para la venta
-    @State private var salesModel = SalesModel()
-    @State private var documentNumber = ""
-    @State private var cost: Double = 0
-    @State private var datePurchase = Date()
+    @State private var salesModel = SalesModel() //logica de ventas
+    @State private var documentNumber = "" // numero de boleta
+    @State private var cost: Double = 0 // precio de producto
+    @State private var datePurchase = Date() // fecha de transaccion (venta)
     
     var columns: [GridItem] = [
         GridItem(.fixed(140), alignment: .leading),

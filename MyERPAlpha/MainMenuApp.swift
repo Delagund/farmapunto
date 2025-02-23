@@ -7,7 +7,7 @@ struct MainMenuApp: View {
     @State private var path = NavigationPath() // Ruta global
     
     /// Datos para conformar los botones
-    var buttonConfigs: [squareButton] = [
+    var buttonConfigs: [SquareButton] = [
         .init(iconSystemName: "pills.fill", buttonName: "Productos", buttonColor: Color.blue),
         .init(iconSystemName: "pencil.and.list.clipboard", buttonName: "Inventario", buttonColor: Color.red),
         .init(iconSystemName: "dollarsign.square", buttonName: "Mantenedor Precios", buttonColor: Color.orange),
@@ -32,7 +32,7 @@ struct MainMenuApp: View {
                 HStack {
                     LazyVGrid(columns: columns, spacing: 35) {
                         ForEach(buttonConfigs, id: \.buttonName) { squareOption in
-                            squareButton(iconSystemName: squareOption.iconSystemName,
+                            SquareButton(iconSystemName: squareOption.iconSystemName,
                                          buttonName: squareOption.buttonName,
                                          buttonColor: squareOption.buttonColor)
                             .onTapGesture {
